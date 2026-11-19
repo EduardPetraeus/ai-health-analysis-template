@@ -196,8 +196,11 @@ anything.
 
 ## Credits and license
 
-The method grew out of one person's long running self analysis with Claude Cowork,
-Claude Science and Claude Code, and was distilled into this template. It draws on ideas
+The method grew out of the author's own long running self analysis, and the author still
+uses it every week: Claude Cowork plans and coordinates, Claude Science does the
+analysis work, and Claude Code builds code when it is needed. Claude Science fits this
+kind of work unusually well, but the template itself works with any AI that can read
+files. It draws on ideas
 from international research standards (EQUATOR, TOP, GRADE, CENT) without claiming to
 comply with them; see [METHOD.md § 14](METHOD.md#14-standards-this-method-draws-on).
 
