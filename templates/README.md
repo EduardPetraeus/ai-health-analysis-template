@@ -13,6 +13,9 @@ Copy a template, never edit it in place. The rules each template serves live in
 | `source.md` | What a data source is and delivers | `semantics/sources/<source>/README.md` |
 | `object.md` | One object from a source and its fields | `semantics/sources/<source>/<object>.md` |
 | `metric.md` | A formula computed from documented fields | `semantics/metrics/<metric>.md` |
+| `ontology.md` | Concepts of one domain, across sources | `semantics/ontology/<domain>.md` |
+| `knowledge.md` | General knowledge on a topic, with numbered sources | `knowledge/<topic>.md` |
+| `handover.md` | State for the next session when work stops unfinished | `analyses/<name>/HANDOVER.md` |
 
 Do not make a variant of a template for a special domain. Five variants drift apart
 exactly like five copies of a rule. When a field does not fit, write why it does not

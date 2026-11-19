@@ -27,8 +27,7 @@ least one real error.
 ### L1 · "Only if it is critical" is not a threshold. It is a mood
 A principle without a threshold is interpreted by whichever session is in the room, and
 the drift always goes to the comfortable side: not confirming, not escalating, not
-deciding. **Do instead:** any rule that should trigger an action gets a number, a date or
-a list. See METHOD § 9.
+deciding. **Do instead:** see METHOD § 13 and § 9.
 
 ### L2 · One field doing two jobs must become two fields
 "Is this value current?" and "when do I measure again?" have different answers. So do a
@@ -50,8 +49,8 @@ error impossible cannot. **Do instead:** ask first whether the design can rule i
 Data outside the repository is an example.
 
 ### L6 · A parsed extract is a claim about the source, not the source
-Parsers silently swap columns, merge lines and drop rows. **Do instead:** spot check the
-extract against the raw file with a different tool. See METHOD § 7.
+Parsers silently swap columns, merge lines and drop rows. **Do instead:** see METHOD § 7,
+item 3.
 
 ### L7 · A control that reads from inside cannot see what was left out
 Self reported checksums, file counts and "all done" statements failed repeatedly. **Do
@@ -64,8 +63,7 @@ instead:** never skip the review for a result someone will act on. See ROLES § 
 
 ### L9 · Conclude on probability; a limitation of the method is not an open finding
 Holding a question open because the method has a blind spot leaves the owner with
-nothing to decide on. **Do instead:** answer with what the data show and how likely the
-opposite is, and write the blind spot next to the answer.
+nothing to decide on. **Do instead:** see METHOD § 7, item 8.
 
 ### L10 · Pilot against the hardest input, not the easiest
 A check that passed on the smallest file failed on the largest. **Do instead:** read the
@@ -77,7 +75,7 @@ Polling a running job every few minutes burns context and usage while adding not
 
 ### L12 · The same marker in two units
 Two labs reported the same marker in different units, and a comparison silently mixed
-them. **Do instead:** read the unit from each report row and store it with the value.
+them. **Do instead:** see METHOD § 7, item 7.
 
 ---
 

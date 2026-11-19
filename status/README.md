@@ -28,7 +28,8 @@ ten lines and let the owner say yes or name the exceptions. "Is everything still
 is a rubber stamp, not a confirmation.
 
 A single field can be confirmed on its own, dated next to the field. That does not reset
-the file's date.
+the file's date. `tools/check.py` also warns about baseline facts whose own date is more
+than 365 days old.
 
 ## Three lists, three questions
 

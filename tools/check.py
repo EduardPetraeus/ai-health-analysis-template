@@ -17,7 +17,8 @@ Blocking checks (exit 1):
   5. Links: every relative Markdown link points to an existing file and heading.
 
 Warnings (exit 0):
-  6. Status files whose owner confirmation is missing, invalid or expired.
+  6. Status files whose owner confirmation is missing, invalid or expired, and baseline
+     facts in status/health-status.md stated more than 365 days ago.
 
 Standard library only. It reports; it never changes a file.
 """
@@ -172,8 +173,11 @@ def readme_tokens(text):
     for code in re.findall(r"`([^`]+)`", text):
         tokens.add(code.strip().rstrip("/"))
     for target in re.findall(r"\]\(([^)\s#]+)", text):
-        tokens.add(target.rstrip("/").split("/")[-1])
+        parts = target.rstrip("/").split("/")
+        tokens.add(parts[-1])
         tokens.add(target.rstrip("/"))
+        if parts[-1] == "README.md" and len(parts) > 1:
+            tokens.add(parts[-2])  # a link to name/README.md names the folder
     return tokens
 
 
@@ -222,7 +226,11 @@ def check_links(files):
             if in_code:
                 continue
             line = re.sub(r"`[^`]*`", "", line)  # links inside inline code are not links
-            for target in link_rx.findall(line):
+            targets = link_rx.findall(line)
+            definition = re.match(r"^\s{0,3}\[[^\]]+\]:\s*<?([^\s>]+)>?", line)
+            if definition:  # reference style link: [name]: target
+                targets.append(definition.group(1))
+            for target in targets:
                 if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.IGNORECASE):
                     continue
                 path_part, _, anchor = target.partition("#")
@@ -260,6 +268,38 @@ def check_status_freshness():
         age, limit = (date.today() - confirmed_on).days, int(valid.group(1))
         if age > limit:
             warnings.append(f"{rel}: confirmed {age} days ago, valid for {limit}; confirm before use")
+    warnings += check_baseline_fields()
+    return warnings
+
+
+BASELINE_FIELD_DAYS = 365  # stated in status/health-status.md, section Baseline facts
+
+
+def check_baseline_fields():
+    """Each baseline fact carries its own date in the last column; warn when it is old."""
+    path = ROOT / "status" / "health-status.md"
+    if not path.exists():
+        return []
+    warnings, in_section = [], False
+    for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
+        if line.startswith("## "):
+            in_section = line.strip().lower().startswith("## baseline facts")
+            continue
+        if not in_section or not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 3 or not cells[1]:
+            continue
+        stated = re.match(r"^\d{4}-\d{2}-\d{2}$", cells[-1])
+        if not stated:
+            continue
+        try:
+            age = (date.today() - date.fromisoformat(cells[-1])).days
+        except ValueError:
+            warnings.append(f"status/health-status.md: {cells[0]} has an invalid date {cells[-1]!r}")
+            continue
+        if age > BASELINE_FIELD_DAYS:
+            warnings.append(f"status/health-status.md: {cells[0]} stated {age} days ago; confirm before use")
     return warnings
 
 
@@ -272,8 +312,8 @@ def install_hook(force):
     hooks = ROOT / ".git" / "hooks"
     if not hooks.exists():
         print("No .git folder: this copy was not cloned with git, so there is no commit to")
-        print("protect. Run `python3 tools/check.py` by hand before sharing anything.")
-        return 1
+        print("protect. Nothing to install; run `python3 tools/check.py` by hand before sharing.")
+        return 0
     hook = hooks / "pre-commit"
     if hook.exists() and HOOK_MARKER not in hook.read_text(errors="ignore") and not force:
         print(f"{hook.relative_to(ROOT)} already exists and was not written by check.py.")

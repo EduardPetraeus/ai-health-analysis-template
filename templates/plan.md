@@ -1,7 +1,9 @@
 # Plan · <YYYY-MM-DD_topic>
 
 *Written by the planner from `brief.md`. Covers phases 0 to 3 (`METHOD.md § 5`).
-Ends with a short overview for the owner and then **stops**.*
+Ends with a short overview for the owner and then **stops**. Anything the planner
+proposes that the owner has not yet decided is marked* (proposed) *until the owner's ok;
+nothing here is the owner's decision before that.*
 
 **Brief:** [`brief.md`](brief.md) · **Status:** draft / approved YYYY-MM-DD by the owner
 
@@ -19,8 +21,8 @@ Ends with a short overview for the owner and then **stops**.*
 
 ## 1. Scientific ground truth
 
-| Claim or threshold | Source (title, year) | Type | Link | Population match |
-|---|---|---|---|---|
+| Claim or threshold | Source (title, year) | Type | Link | Retrieved and read? | Population match |
+|---|---|---|---|---|---|
 
 *Type: guideline · systematic review · RCT · observational study · expert statement ·
 popular science.*
@@ -33,7 +35,8 @@ popular science.*
 **Gaps and oddities found:** *(listed at the same level as findings)*
 
 **Questions for the owner about the data** (answered before the owner's ok; write the
-answers here):
+answers here). Ask them one at a time, with your recommended answer first, and keep to
+the few whose answer could change the result:
 
 ## 3. Method
 

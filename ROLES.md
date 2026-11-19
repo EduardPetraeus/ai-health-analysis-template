@@ -81,5 +81,5 @@ folder is the only safe boundary. Parallel work happens in separate folders (wav
 ## 6. Handover between sessions
 
 A session that stops before the work is done leaves a `HANDOVER.md` in the analysis
-folder: what is done, what is left, what needs the owner, and which files are the current
-truth. Chat history is never the handover; the next session cannot see it.
+folder, from [`templates/handover.md`](templates/handover.md): what is done, what is
+left, what needs the owner, and which files are the current truth. Chat history is never the handover; the next session cannot see it.

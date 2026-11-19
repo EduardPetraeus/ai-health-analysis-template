@@ -16,8 +16,8 @@ data to be opened. Delete the italic guidance when filling in.*
 *What is NOT included?*
 
 ## 3. Person
-*Who is the analysis about? Facts the analysis needs (age, height) are copied into the
-plan with source and date, never linked. If it is someone else: who, and how did they
+*Who is the analysis about? Write "me", not your name (`DATA.md § 4`). Facts the analysis
+needs (age, height) are copied into the plan with source and date, never linked. If it is someone else: who, and how did they
 consent?*
 
 ## 4. Data

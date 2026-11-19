@@ -58,7 +58,9 @@ nothing from a step before the owner has confirmed that step.
    `<source>/raw/` ([DATA.md § 2](DATA.md#2-layout-of-the-data-folder)), offer to move
    them there; if the owner declines, record the actual paths. Then offer to register each
    source in `semantics/sources/` from [`templates/source.md`](templates/source.md),
-   reading only column headers, and the provider's official documentation, never guessing.
+   reading only column headers (`head -1`), and the provider's official documentation,
+   never guessing. This can wait until the first analysis needs the source; a short
+   source file with many *undocumented* fields is fine.
 7. If the folder is a git clone, offer to commit the setup (`config.yaml` is never
    committed). Offer the same after every closed analysis.
 8. Offer two next steps: walk through [`example/`](example/README.md), or start a first
@@ -71,7 +73,7 @@ nothing from a step before the owner has confirmed that step.
 
 | The task is about | Read |
 |---|---|
-| **Any analysis** (new, rerun, or a question about the owner's body) | [`results.md`](results.md) first: is it already answered? Then [METHOD.md](METHOD.md) and [`templates/brief.md`](templates/brief.md) |
+| **Any analysis** (new, rerun, or a question about the owner's body) | [`results.md`](results.md) first: is it already answered? Then [METHOD.md](METHOD.md) and [`templates/brief.md`](templates/brief.md). Do not open `example/` for the owner's own analysis before the plan is approved; it answers a similar question for someone else |
 | Who may write which file | [ROLES.md](ROLES.md) |
 | Where data lives, file naming, other people's data | [DATA.md](DATA.md) |
 | What a field, concept or metric means | [`semantics/README.md`](semantics/README.md) |

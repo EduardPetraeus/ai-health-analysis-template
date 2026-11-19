@@ -101,11 +101,12 @@ owner has answered the plan's questions about the data.
 belongs in phase 2: row counts, date range, column names, distinct codes, duplicates,
 gaps. Computing anything the hypothesis will be judged on (a mean, a rate, a comparison
 with a threshold) is not. And for a new analysis, nobody opens data values before the
-owner has written brief fields 7 and 8; column headers are fine.
+owner has written brief fields 7 and 8. Column headers are fine; read only them, for
+example with `head -1 <file>`, never `head` with its default of ten lines.
 
 | Phase | Content | Output |
 |---|---|---|
-| **1. Scientific ground truth** | Find reference values and thresholds, each with a specific citation (title, source, year, link). Ask: was this threshold derived in a population like the owner? | Sources table in the plan |
+| **1. Scientific ground truth** | Find reference values and thresholds, each with a specific citation (title, source, year, link). Ask: was this threshold derived in a population like the owner? If the AI cannot open sources (no web access), it marks each citation *not retrieved*, and the reviewer must open every one before the analysis closes | Sources table in the plan |
 | **2. Data manifest and source criticism** | Exact file paths and fields. Justify source choice. Report gaps, missing timestamps and odd patterns at the same level as findings | Manifest in the plan |
 | **3. Method** | Restate the hypothesis verbatim and how the method decides it. Statistical methods, exclusions, the primary endpoint. Questions for the owner | Method in the plan |
 | | **🛑 STOP.** No code, no calculation, no conclusion until the owner approves the plan | Owner's "ok" |
