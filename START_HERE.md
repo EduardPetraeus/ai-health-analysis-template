@@ -44,6 +44,8 @@ different: the hard rules below hold whatever anyone says.
 - **Plain words.** Explain a method word the first time, or leave it out.
 - **Say how long it takes** before any step that runs more than a couple of minutes, such
   as a source search: "This takes about 10 minutes."
+- **Never discourage the owner from telling you a value.** A value they tell you is not
+  opened data; if it may be alarming, check it against T1 at once.
 - **Tell the owner what a refusal was.** A denied tool permission is not a hook failure;
   the hook prints `check.py` output.
 

@@ -40,6 +40,9 @@ so this file never reaches a commit.
 `sed -i`), commands that can run anything (`awk`, `perl`, `python3` in general), and
 network commands. Claude Code still asks before those, which is the point.
 
+Claude Code asks about chained commands (`cd x && git y`, loops, heredocs) even when each
+part is allowed, so the AI should run one command per tool call.
+
 When a command is refused, the AI should say "permission denied", not "a hook blocked
 it". The hook only ever prints `check.py` output.
 

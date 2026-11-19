@@ -121,6 +121,15 @@ expected result of each fix before you run it.
 Then open a new chat and review again. After three rounds without green, the reviewer
 stops and asks you how to go on.
 
+A green review may still list small form findings outside the conclusion. Fix them if
+you like. If anything in `conclusion.md` changes after a green review, a new chat checks
+the change before you close:
+
+```text
+conclusion.md in analyses/<folder name>/ changed after the green review. Run check 11
+of templates/review.md on the changed lines only, and commit the result in review.md.
+```
+
 **Want to see an example first?** Paste this instead:
 
 ```text

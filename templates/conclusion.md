@@ -3,9 +3,9 @@
 **Analysis:** YYYY-MM-DD · **Full trail:** [`reanalysis.md`](reanalysis.md) ·
 [`review.md`](review.md)
 
-*Written before the review, so the review checks every number in it. One page, about
-400 words, tables not counted. Tables at most three columns. Plain language; method
-words belong in `reanalysis.md`. No advice, deadlines or urgency unless quoted from a cited source
+*Written before the review, so the review checks every number in it. One page: at most
+500 words of prose, headings and tables not counted. Tables at most three columns. Plain
+language; method words belong in `reanalysis.md`. No advice, deadlines or urgency unless quoted from a cited source
 (`METHOD.md § 8`). Not medical advice (`DISCLAIMER.md`).*
 
 ## 1. What we asked

@@ -19,7 +19,8 @@ never `—` or `n/a`.*
 - Numerator:
 - Denominator, and why this one:
 - Excluded, and why:
-- Missing data, and how it was handled:
+- Missing data, and how it was handled: *(name every session, day or sample that departs
+  from the protocol, not only counts)*
 - Groups or phases, and who confirmed the boundaries:
 
 ## 4. Calculation

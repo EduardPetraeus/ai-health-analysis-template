@@ -33,7 +33,7 @@ only; earlier rounds live in git history.*
 3. **Form:**
 
 ## Verdict
-✅ green (no finding of rank 1 or 2) / ❌ fixes needed (list, each with the expected result
+✅ green (no finding of rank 1 or 2, and none in `conclusion.md`) / ❌ fixes needed (list, each with the expected result
 after the fix)
 
 ## Next step for the owner

@@ -19,7 +19,7 @@ that the owner has not yet decided is marked* (proposed) *until the owner's ok.*
 | Primary endpoint (one) | |
 | Secondary endpoints | |
 | Kind of analysis | confirmatory / retrospective with preregistered plan / exploratory, and why |
-| Guidelines compared against | *from brief field 10; all relevant ones if unknown* |
+| Guidelines compared against | *from brief field 10. If the owner does not know, every relevant guideline, European and US at least, each with its threshold for this kind of measurement* |
 
 ## 1. Scientific ground truth
 

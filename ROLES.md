@@ -69,9 +69,14 @@ The review is what catches the errors nobody else sees. No analysis closes witho
 6. Findings go in `review.md` ([template](templates/review.md)), ranked by consequence:
    wrong meaning or wrong number first, then reproducibility, then form. **The reviewer
    commits `review.md`** and tells the owner, in one message, what to paste where next.
+   Run one command per tool call. If the commit is refused, say that the chat that ran
+   the analysis will commit `review.md` unchanged; never ask the owner to run git.
 
-**The fix loop.** Findings of rank 1 and 2 block closing; form findings are fixed or
-listed as open. The session that executed the analysis fixes them (at level 1, the
+**The fix loop.** Findings of rank 1 and 2 block closing, and so does any finding in
+`conclusion.md`, form included: a green review means the conclusion is final. Other form
+findings are fixed or listed as open. **Any change to `conclusion.md` after a green
+review is reviewed again** by a new session, which runs check 11 on the changed lines
+before the analysis closes. The session that executed the analysis fixes them (at level 1, the
 analysis chat), stating each fix's expected result before running it; the owner pastes
 the fix prompt from [README.md](README.md#5-have-it-reviewed). Then a **new** review
 session reviews again. After three rounds without green, stop and ask the owner how to

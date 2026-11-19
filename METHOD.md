@@ -113,7 +113,8 @@ approves phases 0 to 3 together, after the owner has answered the plan's questio
 1. **Until the brief is committed** (§ 3): only column headers (`head -1 <file>`).
 2. **After the brief commit, before the ok:** the data may be described but not judged.
    First find the T1 alarm limits with their source (§ 9), or write that none exist.
-   Then tell the owner what will be read and why, in one line, and read it. Row counts,
+   Then say in one line what you will read and why, end the message, and read it after
+   the owner's ok. Row counts,
    date range, distinct codes, duplicates and gaps are allowed. Anything the decision
    rule will judge (a mean, a rate, a comparison with a threshold) is not.
 3. **After the ok and the plan commit:** phases 4 and 5.
@@ -127,7 +128,12 @@ average or other summary, even if the owner asks; the owner cannot approve conti
 past T1 ([ROLES.md § 3](ROLES.md#3-what-only-the-owner-approves)). A new analysis may
 start once the step the source names has happened, for example measuring again or
 seeing a clinician, and its brief records that step. If the owner reports symptoms, T6
-applies as well.
+applies as well. **The stop leaves a trace:** the analysis README records the values,
+the limit, its source and the source's step, and is committed; the AI proposes a row for
+`status/follow-up.md` for the owner to confirm.
+
+**Values the owner tells you are not opened data.** Never discourage the owner from
+telling you a value. If it may be alarming, check it against T1 at once.
 
 | Phase | Content | Output |
 |---|---|---|
@@ -171,7 +177,9 @@ analysis just as surely as a wrong number.
 5. **Labels from apps and tests are semantics too.** "Stage 1", "dysbiosis", "poor
    recovery": find the definition behind the label (which guideline, which threshold,
    applied to which kind of measurement, and to one reading or an average) before
-   comparing anything to it.
+   comparing anything to it. When a label shares a name with a guideline category, test
+   every scale in the sources already opened (office and home, each guideline) on every
+   row and report the match counts, before calling the label undocumented.
 
 Concepts and where each kind of knowledge lives: [`semantics/CONCEPTS.md`](semantics/CONCEPTS.md).
 
@@ -236,7 +244,7 @@ session reading **only** this file reaches the same numbers.
 
 ### `conclusion.md` is one page
 
-At most about 400 words, tables not counted. Tables are tall and narrow (at most three
+At most 500 words of prose, headings and tables not counted. Tables are tall and narrow (at most three
 columns) so they read on a phone. **It starts with an answer the owner could repeat to a
 clinician in one everyday sentence.** Method words (trigger numbers, interval names)
 belong in `reanalysis.md`; the conclusion names a fired trigger in plain words.
@@ -276,7 +284,7 @@ that cannot be checked is written as "could not be checked" with the reason, nev
 
 | # | Trigger | What to do |
 |---|---|---|
-| T1 | A value crosses a **published alarm limit** | Computation ends (§ 5). Exactly what the limit's source says to do, quoted. No offer to continue; the owner cannot approve continuing. Checked on every value as soon as any value is read |
+| T1 | A value crosses a **published alarm limit** | Computation ends (§ 5). Exactly what the limit's source says to do, quoted. No offer to continue; the owner cannot approve continuing. Checked on every value as soon as any value is read. **When sources give different limits, the strictest one applies,** for each measured value separately (for blood pressure, systolic and diastolic each), with its source named and the others listed |
 | T2 | A guideline names the finding as an **indication for referral** or further workup | Take it to a clinician, with the guideline named |
 | T3 | The same marker moves the wrong way over **at least three independent measurements**, by more than its documented variation | Take it to a clinician. Without a sourced figure for the variation: could not be checked |
 | T4 | A **combination** of markers that a guideline names as a pattern needing assessment | Take it to a clinician, with the guideline named |
