@@ -129,8 +129,29 @@ def decide(summary, threshold):
     return "inconclusive"
 
 
+def alarm_check(rows):
+    """Safety first (METHOD section 5): every single raw value, before anything else."""
+    hits = [r for r in rows if int(r["SYS (mmHg)"]) > ALARM[0] or int(r["DIA (mmHg)"]) > ALARM[1]]
+    if hits:
+        listed = ", ".join(f"{r['SYS (mmHg)']}/{r['DIA (mmHg)']} on {r['Date']} {r['Time']}" for r in hits)
+        raise SystemExit(f"STOP: reading above {ALARM[0]}/{ALARM[1]} ({listed}). Tell the owner now "
+                         "(trigger T1); nothing else is computed or written.")
+    return len(hits)
+
+
+def readings_unit_interval(rows):
+    """Alternative from reanalysis.md section 10: every protocol reading (days 2 to 7) as the unit."""
+    vals = [int(r["DIA (mmHg)"]) for r in rows
+            if r["Note"] == "protocol" and date.fromisoformat(r["Date"]) != PROTOCOL_FIRST_DAY]
+    n = len(vals)
+    m = statistics.mean(vals)
+    half = t975(n - 1) * statistics.stdev(vals) / n ** 0.5
+    return m - half, m + half
+
+
 def run():
     raw = load()
+    alarm_hits = alarm_check(raw)
     rows, duplicates = deduplicate(raw)
     assert len(duplicates) == EXPECTED_DUPLICATES, f"expected {EXPECTED_DUPLICATES} duplicates, found {len(duplicates)}"
     for r in rows:
@@ -140,13 +161,6 @@ def run():
     assert len(excluded) == EXPECTED_EXCLUDED, f"expected {EXPECTED_EXCLUDED} excluded, found {len(excluded)}"
     rows = [r for r in rows if r["Note"] not in EXCLUDE_NOTES]
 
-    # Safety first (METHOD section 5): every single value against the alarm limit.
-    alarm_hits = [r for r in rows if int(r["SYS (mmHg)"]) > ALARM[0] or int(r["DIA (mmHg)"]) > ALARM[1]]
-    if alarm_hits:
-        listed = ", ".join(f"{r['SYS (mmHg)']}/{r['DIA (mmHg)']} on {r['Date']} {r['Time']}" for r in alarm_hits)
-        raise SystemExit(f"STOP: reading above {ALARM[0]}/{ALARM[1]} ({listed}). Tell the owner now "
-                         "(trigger T1); nothing else is computed or written.")
-
     label_matches = sum(app_rule(int(r["SYS (mmHg)"]), int(r["DIA (mmHg)"])) == r["Category"] for r in rows)
 
     primary = protocol_summary(rows, skip_first_day=True)
@@ -154,6 +168,7 @@ def run():
 
     esc = FRAMEWORKS["esc_2024"]["hypertension"]
     esc_elevated = FRAMEWORKS["esc_2024"]["elevated"]
+    alt_lo, alt_hi = readings_unit_interval(rows)
     aha = FRAMEWORKS["aha_acc"]["stage1"]
 
     adhoc = [r for r in rows if r["Note"] != "protocol"]
@@ -166,15 +181,16 @@ def run():
     def m(rs, col):
         return statistics.mean(int(r[col]) for r in rs)
 
-    # every reading vs alarm; 2 frameworks x sys/dia x primary/sensitivity; ESC elevated band sys/dia
-    comparisons = len(rows) + 2 * 2 * 2 + 2
+    # every raw reading vs alarm; 2 frameworks x sys/dia x primary/sensitivity;
+    # ESC elevated band sys/dia; the readings unit alternative against AHA/ACC diastolic
+    comparisons = len(raw) + 2 * 2 * 2 + 2 + 1
 
     return [
         ("raw_rows", len(raw)),
         ("duplicates_removed", len(duplicates)),
         ("excluded_cuff_loose", len(excluded)),
         ("analysed_rows", len(rows)),
-        ("readings_above_alarm_180_120", len(alarm_hits)),
+        ("raw_readings_above_alarm_180_120", alarm_hits),
         ("app_label_matches_rule_per_reading", f"{label_matches}/{len(rows)}"),
         ("protocol_complete_days_primary", primary["days"]),
         ("protocol_incomplete_days_primary", primary["incomplete_days"]),
@@ -199,6 +215,9 @@ def run():
         ("sensitivity_all7_mean_dia", round(sensitivity["dia"][0], 1)),
         ("sensitivity_all7_decision_esc", decide(sensitivity, esc)),
         ("sensitivity_all7_decision_aha", decide(sensitivity, aha)),
+        ("alt_readings_unit_dia_ci95_low", round(alt_lo, 1)),
+        ("alt_readings_unit_dia_ci95_high", round(alt_hi, 1)),
+        ("alt_readings_unit_decision_aha_dia", "rejected" if alt_hi < aha[1] else "not rejected"),
         ("adhoc_readings", len(adhoc)),
         ("adhoc_labelled_stage1_or_2", f"{len(hyper_labels)}/{len(adhoc)}"),
         ("adhoc_no_note_mean_sys", round(m(adhoc_plain, "SYS (mmHg)"), 1)),

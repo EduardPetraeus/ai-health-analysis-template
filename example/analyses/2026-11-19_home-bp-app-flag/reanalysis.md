@@ -16,7 +16,8 @@ Semantics: [`example/semantics/sources/home-bp-app/reading.md`](../../semantics/
 
 ## 2. Extraction
 `analysis.py`: `load()` reads the CSV and runs `validate_extract` (84 expected rows,
-plausible ranges); `run()` removes exact duplicates and asserts 2, validates that date
+plausible ranges); `alarm_check()` then checks every raw reading against 180/120 and stops
+the script on a hit; `run()` removes exact duplicates and asserts 2, validates that date
 and time are then unique, excludes the `cuff loose` reading and asserts 1.
 
 ## 3. Definitions
@@ -47,7 +48,7 @@ either threshold (§ 5).
 | Metric | Value |
 |---|---|
 | Rows analysed | 81 of 84 raw (2 duplicates, 1 excluded) |
-| Readings above 180/120 | 0 of 81 |
+| Readings above 180/120 | 0 of 84 raw readings, checked before any exclusion |
 | **Protocol mean, days 2 to 7** | **125.5/78.4 mmHg** (24 readings, 6 complete days) |
 | 95 % interval, systolic | 122.6 to 128.5 |
 | 95 % interval, diastolic | 76.1 to 80.7 |
@@ -99,17 +100,22 @@ ESH 2021 home threshold.
   before the repository had a commit, so no commit predates the data.
 - **Changes after the first result.** The repository's first commit, `b68dc6e`,
   already holds the plan, the data and a result, so the original approved plan is not in
-  git. Changes since:
-  - In `b68dc6e` (after a first review): owner questions about duplicates and symptoms,
-    triggers T4 to T7, the supported and inconclusive outcomes, the highest diastolic
-    reading.
-  - In `d1bc466` (after an external review showed the AHA/ACC home threshold is 130/80):
-    the AHA/ACC comparison and per guideline decisions; *confirmatory* changed to
-    *retrospective*; the complete day rule; the margin and device error step; the
-    comparison count changed from 2 to every comparison made; three result rows that
-    rested on the earlier single threshold removed.
-  - In the commit after `d1bc466` (after the final review): the alarm check now stops the
-    script, the ESC elevated band is a result row, and this list.
+  git. What changed after the first result:
+  - Before `b68dc6e`, after the first review rounds: owner questions about duplicates and
+    symptoms; triggers T4 to T7; the supported and inconclusive outcomes; the highest
+    diastolic reading; asserted counts of duplicates (2) and exclusions (1) and the check
+    that date and time are unique; the reason for discarding day 1.
+  - `d1bc466`, after an external review showed the AHA/ACC home threshold is 130/80: the
+    AHA/ACC comparison and per guideline decisions; *confirmatory* changed to
+    *retrospective*; the scope note; the complete day rule; the margin and device error
+    step; the day 1 reason reworded to cite both sources; the comparison count changed
+    from 2 to every comparison made; three result rows that rested on the earlier single
+    threshold removed.
+  - `d62d117`, after the final review: the alarm check stops the script; the ESC elevated
+    band became a result row; the count went from 89 to 91.
+  - The commit "Final review round 2 fixes": the alarm check runs on all 84 raw readings
+    before any exclusion; the readings unit alternative became result rows; the count
+    went from 91 to 95.
 
   The (fictional) owner approved each changed plan with "ok" on 2026-11-19. The ESC
   decision, the primary endpoint and every number in it are unchanged throughout.
@@ -117,9 +123,10 @@ ESH 2021 home threshold.
 - **Decision and outcome:** ESC 2024 rejected; AHA/ACC inconclusive.
 - **Primary endpoint:** protocol week mean, days 2 to 7.
 - **Kind of analysis:** retrospective with a plan; the owner had seen the readings.
-- **Comparisons held against a reference:** 91 (81 readings against the alarm limit;
-  systolic and diastolic against two guidelines for the primary and the sensitivity
-  analysis; the primary mean against the ESC elevated band). The two primary decisions decide the answer.
+- **Comparisons held against a reference:** 95 (84 raw readings against the alarm
+  limit; systolic and diastolic against two guidelines for the primary and the
+  sensitivity analysis; the primary mean against the ESC elevated band; the readings unit
+  alternative against AHA/ACC diastolic). The two primary decisions decide the answer.
 - **What would falsify it:** a new protocol week, with a validated cuff, whose interval
   lies at or above a threshold.
 
@@ -130,6 +137,6 @@ ESH 2021 home threshold.
 - **Free choices:** day 1, the averaging unit, the complete day rule, which guideline.
   Two of them change the AHA/ACC decision: the guideline itself, and the averaging unit.
   With all 24 readings as the unit instead of days, the diastolic interval is 77.1 to
-  79.6 and AHA/ACC becomes *rejected*. That interval overstates certainty, because two
+  79.6 and AHA/ACC becomes *rejected* (`alt_readings_unit_*` in `results.csv`). That interval overstates certainty, because two
   readings a minute apart are not independent, which is why the plan uses days.
 - **Replication:** a second protocol week with a cuff confirmed as clinically validated.

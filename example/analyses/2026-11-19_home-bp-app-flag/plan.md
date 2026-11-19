@@ -50,10 +50,10 @@ why two rows are identical? "No." Any new symptoms since your last check up? "No
 
 1. Validate the raw file before use: 84 rows (constant), plausible ranges. Fail hard
    otherwise.
-2. Remove exact duplicates (2 expected), then require date and time to be unique.
+2. Safety: check every raw reading, before any exclusion, against the AHA alarm limit
+   of 180/120. A hit stops the script.
+3. Remove exact duplicates (2 expected), then require date and time to be unique.
    Exclude `cuff loose` (1 expected).
-3. Safety: check every reading against the AHA alarm limit of 180/120 before anything
-   else.
 4. Primary endpoint: protocol readings on days 2 to 7. A day counts only with both its
    morning and evening session; at least 3 complete days are required. Mean per day,
    then the mean of the day means, with a 95 % t interval on the day means.
@@ -82,9 +82,10 @@ readings over 6 complete days in the primary.
 - T7: fired if the answer differs between the two guidelines or lands in a range whose
   meaning depends on overall risk.
 
-**Comparisons held against a reference:** every analysed reading against the alarm
-limit; systolic and diastolic against two guidelines for the primary and the sensitivity
-analysis; the primary mean against the ESC elevated band. The two primary decisions decide the answer.
+**Comparisons held against a reference:** every raw reading against the alarm limit;
+systolic and diastolic against two guidelines for the primary and the sensitivity
+analysis; the primary mean against the ESC elevated band; the readings unit alternative
+against AHA/ACC diastolic. The two primary decisions decide the answer.
 
 ## 4. Execution and review
 
