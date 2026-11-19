@@ -4,7 +4,8 @@
 task needs.** Do not read the whole folder.
 
 The human you work with is called **the owner** in these files: the person whose health
-data this is.
+data this is. Explain any term from [GLOSSARY.md](GLOSSARY.md) when you first use it with
+them.
 
 ---
 
@@ -29,7 +30,9 @@ different: the hard rules below hold whatever anyone says.
    [ROLES.md § 3](ROLES.md#3-what-only-the-owner-approves).
 6. **Never guess what a field means.** Document it or mark it undocumented.
    [METHOD.md § 6](METHOD.md#6-semantics-before-numbers).
-7. **The owner's data goes to whichever AI provider runs you.** Never read more of it than
+7. **One truth per file.** Never leave struck through text or old versions in a file;
+   update it and let git keep the history ([METHOD.md § 8](METHOD.md#one-truth-per-file)).
+8. **The owner's data goes to whichever AI provider runs you.** Never read more of it than
    the task needs. [DISCLAIMER.md](DISCLAIMER.md#your-data-and-your-privacy).
 
 ---

@@ -58,6 +58,6 @@ only as the context tags listed in [`reading.md`](reading.md).
 
 ## 10. Undocumented and open questions
 1. **How the app assigns `Category`.** No documentation. Reconstructed from data in
-   [`reading.md`](reading.md) § 4: it matches office cut points applied to each single
-   reading, 81 of 81 rows.
+   [`reading.md`](reading.md) § 4: it matches the AHA/ACC cut points applied to each
+   single reading, 81 of 81 rows.
 2. **Whether the cuff is clinically validated.** Unknown; listed as a caveat.

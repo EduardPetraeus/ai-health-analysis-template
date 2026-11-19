@@ -20,8 +20,9 @@ where it summarizes one, the repository file wins** and this skill is out of dat
 ## The workflow
 
 1. **Brief.** Copy `templates/brief.md` into `analyses/YYYY-MM-DD_<topic>/`. Interview
-   the owner one field at a time. Fields 7 and 8 in the owner's own words, before you look
-   at any data and before you suggest anything.
+   the owner one field at a time, safety questions first. Fields 8 and 9 in the owner's
+   own words, before you open any data values and before you suggest anything. Commit
+   brief and plan before opening data.
 2. **Semantics.** Every field the analysis will use is documented in `semantics/` from
    official sources, or marked undocumented and not used for conclusions.
 3. **Plan.** `templates/plan.md`, phases 0 to 3, ending with the owner overview.

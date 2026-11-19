@@ -69,7 +69,7 @@ before it is run.
 | Folder or file | Written by |
 |---|---|
 | `status/` | Owner approves every change |
-| `analyses/<name>/` | The planner and executor of that analysis; frozen once closed |
+| `analyses/<name>/` | The planner and executor of that analysis; after closing, changed only through a new review, with the commit listed in `reanalysis.md` § 9 |
 | `semantics/`, `knowledge/`, `results.md`, READMEs | AI, verified and dated |
 | `learnings.md` | AI proposes; owner decides |
 | `METHOD.md`, `ROLES.md`, `DATA.md`, `START_HERE.md`, `templates/` | Changed only with the owner's explicit yes |

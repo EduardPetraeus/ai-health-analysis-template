@@ -1,56 +1,58 @@
 # Plan · <YYYY-MM-DD_topic>
 
-*Written by the planner from `brief.md`. Covers phases 0 to 3 (`METHOD.md § 5`).
-Ends with a short overview for the owner and then **stops**. Anything the planner
-proposes that the owner has not yet decided is marked* (proposed) *until the owner's ok;
-nothing here is the owner's decision before that.*
+*Written by the planner from `brief.md`. Covers phases 0 to 3 (`METHOD.md § 5`). Ends
+with a short overview for the owner and then **stops**. Anything the planner proposes
+that the owner has not yet decided is marked* (proposed) *until the owner's ok.*
 
 **Brief:** [`brief.md`](brief.md) · **Status:** draft / approved YYYY-MM-DD by the owner
 
-## 0. Hypothesis and endpoints
+## 0. Hypothesis and decision rule
 
 | Field | Content |
 |---|---|
-| Owner's hypothesis (verbatim from brief field 7) | |
-| Owner's falsification (verbatim from brief field 8) | |
-| Hypothesis as tested (sharpened, if needed) | |
-| Null hypothesis | |
+| Owner's hypothesis (verbatim, brief field 8) | |
+| Owner's falsification (verbatim, brief field 9) | |
+| Hypothesis as tested | |
+| Decision rule: supported | *numbers; say "and" or "or"* |
+| Decision rule: rejected | |
+| Decision rule: inconclusive | |
 | Primary endpoint (one) | |
 | Secondary endpoints | |
-| Exploratory or confirmatory | |
+| Kind of analysis | confirmatory / retrospective with preregistered plan / exploratory, and why |
+| Guidelines compared against | *from brief field 10; all relevant ones if unknown* |
 
 ## 1. Scientific ground truth
 
-| Claim or threshold | Source (title, year) | Type | Link | Retrieved and read? | Population match |
+| Claim or threshold | Source (title, year) | Type | Link | Opened and read? | Matches the owner? (yes, no, unknown) |
 |---|---|---|---|---|---|
 
-*Type: guideline · systematic review · RCT · observational study · expert statement ·
-popular science.*
+*Type: guideline · systematic review · RCT · observational study · position paper ·
+expert statement · patient information.*
 
 ## 2. Data manifest
 
 | Source and object | Path (relative to `data_path`) | Fields used | Period | Rows | Semantics documented? |
 |---|---|---|---|---|---|
 
-**Gaps and oddities found:** *(listed at the same level as findings)*
+**Gaps and oddities found when describing the data:**
 
-**Questions for the owner about the data** (answered before the owner's ok; write the
-answers here). Ask them one at a time, with your recommended answer first, and keep to
-the few whose answer could change the result:
+**Questions for the owner** (asked one at a time, recommended answer first, only those
+whose answer could change the result; answers written here before the ok):
 
 ## 3. Method
 
-*How the numbers are made, step by step: filters, exclusions, aggregation, statistics,
-how the primary endpoint decides the hypothesis. Free choices another analyst could have
-made differently.*
+*Step by step: filters, exclusions, aggregation, statistics. The assumptions behind the
+statistics. Minimum data for a valid result and what happens with incomplete days. How
+large a measurement error would change the answer. Free choices another analyst could
+have made differently.*
 
-**Expected results, preregistered:** *(row counts, which outputs will exist, what the
-endpoint will be compared against)*
+**Expected results, preregistered:** *(row counts, which outputs will exist)*
 
-**Escalation triggers:** *(which of T1 to T7 can apply here, and the sourced limit for
-each, or "no source found")*
+**Escalation triggers:** *(T1 to T7, each with its sourced limit and what the source says
+to do, or "no source found"; which cannot be checked and why)*
 
-**Number of metrics that will be held against a reference:**
+**Comparisons held against a reference:** *(count all of them, and name the ones that
+decide the answer)*
 
 ## 4. Execution and review
 
@@ -68,4 +70,5 @@ each, or "no source found")*
 - **What this can NOT answer:**
 - **What comes back to you:**
 
-🛑 **Stop here until the owner says ok.**
+🛑 **Stop here until the owner says ok. Then commit `brief.md` and `plan.md` before any
+data value is opened (`METHOD.md § 3`).**

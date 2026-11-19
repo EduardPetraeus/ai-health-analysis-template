@@ -43,20 +43,21 @@ Carries `cardiovascular.systolic_bp`, `cardiovascular.diastolic_bp` and
 | `category` | `Category` | See below | ✅ 81/81 rows |
 | `note` | `Note` | | |
 
-**How `Category` was decoded.** Hypothesis: the app applies the AHA/ACC office categories
-to each reading on its own (Stage 2 if ≥140 or ≥90; Stage 1 if ≥130 or ≥80; Elevated if
+**How `Category` was decoded.** Hypothesis: the app applies the AHA/ACC categories to
+each reading on its own (Stage 2 if ≥140 or ≥90; Stage 1 if ≥130 or ≥80; Elevated if
 systolic 120 to 129 and diastolic below 80; otherwise Normal). Test: `app_rule()` in
 [`analysis.py`](../../../analyses/2026-11-19_home-bp-app-flag/analysis.py), applied to every
-analysed row. Result: `app_label_matches_office_rule = 81/81`.
+analysed row. Result: `app_label_matches_rule_per_reading = 81/81`.
 
-**Untested part (review round 1):** no reading in this delivery has a systolic of exactly
-140 or a diastolic of 90 or more, so the Stage 2 boundary (≥ or >, and the diastolic arm)
-is not exercised. Reuse the rule for Stage 2 only after a delivery that tests it.
-
-**What that means:** the label is an **office** category applied to **one** home
-reading, without any averaging or measurement protocol. Guidelines define categories on
-averages of properly taken readings, and home thresholds differ from office thresholds
+**What that means:** the cut points themselves are the ones AHA/ACC use, and AHA/ACC
+use the same 130/80 at home as in the office. The problem is that the app puts the
+category on **one** reading, without averaging or a measurement protocol
 ([`knowledge/home-blood-pressure.md`](../../../knowledge/home-blood-pressure.md)).
+
+**Untested part:** no reading has a systolic of exactly 140 or a diastolic of 90 or
+more, so the Stage 2 boundary is not exercised. In this synthetic export the match is
+built in, because the same rule generated the labels; with a real export the 81/81 test
+is what tells you the rule.
 
 ## 5. Time
 Local phone time; no time zone or daylight saving information. A "day" is the local

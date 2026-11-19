@@ -1,9 +1,10 @@
 # Review · <YYYY-MM-DD_topic>
 
-*Written by a session that did not plan or execute the analysis (`ROLES.md § 4`).
-A verdict is a command and its output, not an opinion.*
+*Written by a session that did not plan or execute the analysis (`ROLES.md § 4`). A
+verdict is a command and its output, not an opinion. The file shows the latest review
+only; earlier rounds live in git history.*
 
-**Reviewer:** <session, model> · **Date:** YYYY-MM-DD · **Round:** 1
+**Reviewer:** <session, model> · **Date:** YYYY-MM-DD · **Commit reviewed:** <hash>
 
 ## Expectation before reading the results
 *What the reviewer expects the primary endpoint to be, written before opening
@@ -16,12 +17,13 @@ A verdict is a command and its output, not an opinion.*
 | 1 | Script reruns and reproduces every number in `reanalysis.md` § 5 | | | ✅ / ❌ |
 | 2 | Every field used is documented in `semantics/` | | | |
 | 3 | Every number meets METHOD § 2 | | | |
-| 4 | Thresholds match their cited sources (source opened, not just titled) | | | |
-| 5 | Hypothesis in `reanalysis.md` § 9 matches the approved plan verbatim | | | |
+| 4 | Thresholds match their cited sources, opened and read. Without web access: could not be checked | | | |
+| 5 | Preregistration commit exists and precedes the data; changes after it are listed | | | |
 | 6 | Negative statements have positive controls | | | |
 | 7 | A planted error is caught by the analysis checks | | | |
 | 8 | No data files and no living file dependencies | | | |
-| 9 | `conclusion.md` within one page and section 5 filled in | | | |
+| 9 | `conclusion.md` within one page, section 5 filled in, no advice or urgency without a source | | | |
+| 10 | The statistics hold: assumptions stated, an alternative analysis or threshold source tried, the conclusion follows from the numbers | | | |
 
 ## Findings, ranked by consequence
 1. **Wrong meaning or wrong number:**

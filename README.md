@@ -32,19 +32,21 @@ are copied. This template removes those failure modes by design:
 | Column meanings are guessed | Every field is documented from the provider's own docs, or marked *undocumented* |
 | A number with no trail | Every number has its source, numerator and denominator, date range, exclusions and date of calculation |
 | The same AI checks its own work | A separate review reruns the analysis before you trust it |
-| Findings live in a chat and vanish | Each analysis is a frozen folder anyone can rerun |
+| Findings live in a chat and vanish | Each analysis is a folder anyone can rerun, with its history in git |
 
 See it work in [`example/`](example/): an app says a (synthetic) person has *stage 1
 hypertension*. The method finds out what that label actually rests on.
 
 ---
 
-## Get started in 10 minutes
+## Get started
 
 You need an AI assistant that can read and write files in a folder on your computer
-(for example Claude Code, Claude Desktop, Cursor or Codex). A GitHub account is optional.
-Python 3 is needed only for the safety check and the example; your AI can install it.
-No programming needed; the AI does the typing.
+(for example Claude Code, Claude Desktop, Cursor or Codex). A GitHub account and Python
+are optional: GitHub gives you version history, Python runs the safety check and the
+example. You don't write code; the AI does the typing. Expect the setup conversation to
+take half an hour, and a first analysis an evening. New words are explained in
+[GLOSSARY.md](GLOSSARY.md).
 
 ### 1. Make your own private copy
 
@@ -151,7 +153,7 @@ Nothing runs on its own unless you switch it on.
 | [`DATA.md`](DATA.md) | Where data lives and the rules for it | Fixed |
 | [`templates/`](templates/) | Brief, plan, conclusion, reanalysis, review, source, object, metric | Fixed |
 | [`status/`](status/) | Your health status, follow up list and protocol | **You** approve every change |
-| [`analyses/`](analyses/) | One frozen folder per analysis | AI |
+| [`analyses/`](analyses/) | One folder per analysis | AI |
 | [`semantics/`](semantics/) | What your data means: sources, fields, concepts, metrics | AI, from official docs |
 | [`knowledge/`](knowledge/) | General knowledge with sources, never findings about you | AI |
 | [`results.md`](results.md) | Catalog of answered questions and reusable datasets | AI |
@@ -163,6 +165,7 @@ Nothing runs on its own unless you switch it on.
 | [`tools/check.py`](tools/check.py) | Blocks data and private terms from commits; checks indexes and links | Fixed |
 | `config.example.yaml` | Copied to `config.yaml` at setup: your data path and private terms. Never committed | You |
 | `AGENTS.md`, `CLAUDE.md` | Point AI tools to `START_HERE.md`; hold no rules | Fixed |
+| [`GLOSSARY.md`](GLOSSARY.md) | Plain explanations of the words used | Fixed |
 | [`DISCLAIMER.md`](DISCLAIMER.md), [`LICENSE`](LICENSE) | Not medical advice; MIT license | Fixed |
 
 ## Design principles
@@ -174,7 +177,8 @@ Nothing runs on its own unless you switch it on.
    own private terms, before every commit.
 3. **Your files are yours.** The AI drafts, but only you approve health status and
    protocol files.
-4. **Git is the audit trail.** No hand made backups; history shows every change.
+4. **One truth per file.** Every file shows only the current version. No struck through
+   text, no old versions side by side; git holds the history.
 5. **Tool neutral.** Plain Markdown. Works with any AI that can read files.
 
 ## Safety net before you commit
@@ -193,8 +197,8 @@ anything.
 ## Credits and license
 
 The method grew out of one person's long running self analysis with Claude Cowork,
-Claude Science and Claude Code, and was distilled into this template. It implements ideas
-from international research standards (EQUATOR, TOP, GRADE, CENT); see
-[METHOD.md § 14](METHOD.md#14-standards-this-method-implements).
+Claude Science and Claude Code, and was distilled into this template. It draws on ideas
+from international research standards (EQUATOR, TOP, GRADE, CENT) without claiming to
+comply with them; see [METHOD.md § 14](METHOD.md#14-standards-this-method-draws-on).
 
 MIT license. See [LICENSE](LICENSE).

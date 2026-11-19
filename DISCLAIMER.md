@@ -11,9 +11,12 @@ following these files is not one either.
 1. **No diagnosis.** An analysis can say how a measurement compares with a published
    threshold, and how confident that comparison is. It cannot tell you that you have, or
    do not have, a condition.
-2. **No treatment decisions.** Never start, stop or change medication, supplements, diet
-   or any other treatment based on an analysis made with this template.
-   Those decisions belong with a clinician who knows your full history.
+2. **No treatment decisions.** Never start, stop or change prescribed medication or any
+   treatment based on an analysis made with this template, and never pause a prescribed
+   medication to test something. Those decisions belong with a clinician who knows your
+   full history. Everyday habits (sleep, exercise, ordinary food) are your own business,
+   but if you have a condition or take medication, talk to your clinician before changing
+   them as well.
 3. **Thresholds are borrowed, not invented.** Every threshold must come from a cited
    source. If no source exists, the analysis says so. A number without a source is not a
    threshold.

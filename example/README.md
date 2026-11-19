@@ -19,22 +19,22 @@ definition, which threshold, applied to which kind of measurement.
 
 | Step | What happened |
 |---|---|
-| Brief | The owner wrote their hypothesis ("the app is right") and what would change their mind ("a proper week's average clearly below the home threshold") **before** any data were opened |
-| Semantics | The app has no data dictionary. The label was decoded on the data: it applies **office** cut points to **each single reading** (81 of 81 matched) |
-| Knowledge | Guidelines define categories on **averages** of properly taken readings, and **home** thresholds differ from office ones (135/85 vs 140/90 in Europe) |
-| Data quality | Two identical duplicate rows and one "cuff loose" reading were found when describing the file, preregistered in the plan, and asserted by the script |
-| Result | Proper week average 125.5/78.4, whole 95 % interval below the home hypertension threshold of 135/85, in the European *elevated* range. Still, 40 of 53 everyday readings got a Stage 1 or 2 label |
-| Honesty | The US home equivalents were not verified, so they are written as a gap and not used. The overall risk could not be estimated, so the analysis sends the owner to a clinician for it (trigger T7) rather than waiting |
-| Review | Separate review sessions reran everything. Round 1 found five problems of meaning and method. Round 2 caught the executor rewriting the approved plan after the result without saying so; the plan was restored and the changes moved to a dated revision |
+| Brief | Safety questions first. Then the owner wrote their hypothesis ("the app is right") and what would change their mind before the data were analysed |
+| Semantics | The app has no data dictionary. The label was decoded on the data: it applies the US stage cut points to **each single reading** (81 of 81 matched) |
+| Knowledge | Guidelines apply categories to an **average** of properly taken readings. The European home threshold is 135/85; the US one is 130/80 |
+| Data quality | Two identical duplicate rows and one "cuff loose" reading were found when describing the file, and the script asserts both counts |
+| Result | Proper week average 125.5/78.4. Below the European home threshold; unresolved against the US one, because the diastolic interval reaches 80.7 |
+| Honesty | The answer depends on the guideline, and the overall risk could not be estimated, so the conclusion lists questions for a clinician instead of giving advice |
+| Review | Separate review sessions on another model reran everything. One caught the AI rewriting its approved plan after the result; an external review caught that the first version had the US home threshold wrong. Both are fixed; the history is in git |
 
 ## Read it in this order
 
-1. [`analyses/2026-11-19_home-bp-app-flag/brief.md`](analyses/2026-11-19_home-bp-app-flag/brief.md)
-2. [`analyses/2026-11-19_home-bp-app-flag/plan.md`](analyses/2026-11-19_home-bp-app-flag/plan.md)
-3. [`semantics/sources/home-bp-app/reading.md`](semantics/sources/home-bp-app/reading.md): how the label was decoded
-4. [`analyses/2026-11-19_home-bp-app-flag/reanalysis.md`](analyses/2026-11-19_home-bp-app-flag/reanalysis.md)
-5. [`analyses/2026-11-19_home-bp-app-flag/review.md`](analyses/2026-11-19_home-bp-app-flag/review.md)
-6. [`analyses/2026-11-19_home-bp-app-flag/conclusion.md`](analyses/2026-11-19_home-bp-app-flag/conclusion.md): the one page the owner reads
+1. [`analyses/2026-11-19_home-bp-app-flag/conclusion.md`](analyses/2026-11-19_home-bp-app-flag/conclusion.md): the one page the owner reads
+2. [`analyses/2026-11-19_home-bp-app-flag/brief.md`](analyses/2026-11-19_home-bp-app-flag/brief.md)
+3. [`analyses/2026-11-19_home-bp-app-flag/plan.md`](analyses/2026-11-19_home-bp-app-flag/plan.md)
+4. [`semantics/sources/home-bp-app/reading.md`](semantics/sources/home-bp-app/reading.md): how the label was decoded
+5. [`analyses/2026-11-19_home-bp-app-flag/reanalysis.md`](analyses/2026-11-19_home-bp-app-flag/reanalysis.md)
+6. [`analyses/2026-11-19_home-bp-app-flag/review.md`](analyses/2026-11-19_home-bp-app-flag/review.md)
 
 ## Run it yourself
 
@@ -51,7 +51,7 @@ number in the conclusion.
 ## What is in this folder
 
 It mirrors a real copy of the template, in miniature. Only files the example touches are
-included; `status/health-status.md`, which the brief points to, is left out.
+included.
 
 | Path | Mirrors |
 |---|---|

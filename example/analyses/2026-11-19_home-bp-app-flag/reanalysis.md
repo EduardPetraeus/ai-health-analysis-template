@@ -1,7 +1,7 @@
 # Reanalysis · 2026-11-19_home-bp-app-flag
 
-**Analysis run:** 2026-11-19 · **By:** example author (AI session) · **Question:** Does the
-app's "Stage 1 Hypertension" label hold up when home blood pressure is measured and
+**Analysis run:** 2026-11-19 · **By:** Claude Opus 5.5 (AI session) · **Question:** Does
+the app's "Stage 1 Hypertension" label hold up when home blood pressure is measured and
 averaged the way guidelines describe?
 
 *Synthetic data. Every number below is printed by `analysis.py` and stored in
@@ -10,103 +10,112 @@ averaged the way guidelines describe?
 ## 1. Data
 | Source and object | Path | Fields used | Trust tier |
 |---|---|---|---|
-| `home-bp-app.reading` | `example/data-folder/home-bp-app/raw/export-2026-11-18.csv` (sha256 starts `562a0b80`) | Date, Time, SYS (mmHg), DIA (mmHg), Pulse (bpm), Category, Note | Raw export |
+| `home-bp-app.reading` | `example/data-folder/home-bp-app/raw/export-2026-11-18.csv` | Date, Time, SYS (mmHg), DIA (mmHg), Pulse (bpm), Category, Note | Raw export |
 
 Semantics: [`example/semantics/sources/home-bp-app/reading.md`](../../semantics/sources/home-bp-app/reading.md).
 
 ## 2. Extraction
 `analysis.py`: `load()` reads the CSV and runs `validate_extract` (84 expected rows,
-plausible ranges); `run()` removes exact duplicates with `deduplicate()` and asserts the
-preregistered 2, validates that date and time are then unique, and excludes the
-`cuff loose` reading, asserting the preregistered 1.
+plausible ranges); `run()` removes exact duplicates and asserts 2, validates that date
+and time are then unique, excludes the `cuff loose` reading and asserts 1.
 
 ## 3. Definitions
 - Period: 2026-09-02 to 2026-11-14, 74 calendar days. Protocol week 2026-11-08 to
-  2026-11-14, 7 days; primary uses 2026-11-09 to 2026-11-14, 6 days.
-- Protocol reading: `Note == "protocol"`. Ad hoc reading: every other analysed reading.
-- Numerator and denominator for label shares: ad hoc readings labelled Stage 1 or 2, out
-  of all ad hoc readings.
-- Excluded: 2 exact duplicate rows (identical date, time, values, note; cause
-  undocumented, the owner does not know it); 1 reading noted `cuff loose` (owner
-  confirmed invalid). Keeping the duplicates changes only ad hoc shares (42/55), not the
-  primary endpoint (review round 1).
-- Groups: protocol week boundaries from the owner's brief, field 4.
+  2026-11-14; the primary uses 2026-11-09 to 2026-11-14.
+- Protocol reading: `Note == "protocol"`. Everyday reading: every other analysed reading.
+- Label share: everyday readings labelled Stage 1 or 2, out of all everyday readings.
+- Excluded: 2 exact duplicate rows (identical date, time, values and note; cause not
+  documented); 1 reading noted `cuff loose` (owner confirmed invalid).
+- Missing data: a protocol day counts only with both morning and evening sessions. All 6
+  primary days were complete. Everyday readings have no expected schedule, so missing
+  days there are not missing data.
+- Protocol week boundaries: from the owner's brief, field 5.
 
 ## 4. Calculation
-Mean of readings per day, then the mean of the day means. 95 % interval:
-mean ± t(0.975, df = days − 1) × SD(day means) / √days, with t = 2.571 for 5 df (standard
-table). Day means are used because two readings a minute apart are not independent.
+Mean of the readings per day, then the mean of the day means. 95 % interval: mean ±
+t(0.975, days − 1) × SD(day means) / √days, with t = 2.571 for 5 degrees of freedom
+(standard table). Decision rule from `plan.md` § 0, applied to ESC 2024 (135/85) and to
+AHA/ACC (130/80).
+
+**Assumptions:** the six days are independent and roughly normal, one week represents the
+owner, and the cuff has no bias. The interval covers only day to day variation within
+this week. It does not cover week to week variation or device error. A validated cuff
+may still read up to 5 mmHg off on average, which is larger than the diastolic margin to
+either threshold (§ 5).
 
 ## 5. Result
 | Metric | Value |
 |---|---|
 | Rows analysed | 81 of 84 raw (2 duplicates, 1 excluded) |
-| App label equals office cut points per reading | 81/81 readings |
-| **Primary: protocol mean, days 2 to 7** | **125.5/78.4 mmHg** (24 readings over 6 days) |
+| Readings above 180/120 | 0 of 81 |
+| **Protocol mean, days 2 to 7** | **125.5/78.4 mmHg** (24 readings, 6 complete days) |
 | 95 % interval, systolic | 122.6 to 128.5 |
 | 95 % interval, diastolic | 76.1 to 80.7 |
-| Sensitivity: all 7 days | 126.0/78.3 mmHg |
-| Ad hoc readings labelled Stage 1 or 2 | 40/53 (75 %) |
-| Ad hoc mean, no note | 128.7/77.5 mmHg (n = 26) |
-| Ad hoc mean, with a context note | 134.1/81.6 mmHg (n = 27) |
-| Highest single reading (systolic) | 145/70 on 2026-09-10 |
-| Highest diastolic reading | 133/89 on 2026-10-02 |
-| Any reading >180/120 | No |
+| **Decision, ESC 2024 (135/85)** | **Rejected**: both upper ends below |
+| **Decision, AHA/ACC (130/80)** | **Inconclusive**: diastolic interval spans 80 |
+| Margin from upper end to ESC threshold | 6.5 systolic, 4.3 diastolic |
+| Margin from upper end to AHA/ACC threshold | 1.5 systolic, −0.7 diastolic |
+| Sensitivity, all 7 days | 126.0/78.3; same two decisions |
+| Everyday readings labelled Stage 1 or 2 | 40/53 |
+| Everyday mean, no note | 128.7/77.5 (n = 26) |
+| Everyday mean, with a note | 134.1/81.6 (n = 27) |
+| Highest reading, systolic | 145/70 on 2026-09-10 |
+| Highest reading, diastolic | 133/89 on 2026-10-02 |
+| App label equals the per reading rule | 81/81 |
 
 ## 6. Caveats
-- One protocol week only. Blood pressure varies across weeks and seasons.
-- Cuff validation status unknown; a non validated cuff can be biased in either direction.
-- Empty notes mean unknown context, so "no note" readings may still include coffee or
-  rushing.
-- The diastolic interval reaches 80.7, inside the range the app's office cut points call
-  Stage 1. Those cut points are office categories; their home equivalents under AHA/ACC
-  2025 were not verified and are not used.
+- One protocol week. Blood pressure varies between weeks.
+- Cuff validation unknown; device error alone could move either decision.
+- Empty notes mean unknown context.
+- The note comparison and the label match are descriptive. In synthetic data the label
+  match is built in, because the same rule generated the labels; with real data it is
+  the test that matters.
+- The synthetic data have no week effect and no missing sessions, which is where a t
+  interval works best. Real data are messier.
 
 ## 7. How to run it again
 `python3 example/analyses/2026-11-19_home-bp-app-flag/analysis.py` from the repository
 root, Python 3.9 or later, no packages. `--check` reruns and compares with the committed
-results. With a new export: add it as a new file, update `RAW` and `EXPECTED_RAW_ROWS`
-deliberately, and update the protocol dates.
+results. With a new export: add it as a new file and update `RAW`, `EXPECTED_RAW_ROWS`
+and the protocol dates deliberately.
 
 ## 8. Scientific basis and source criticism
-| Claim | Source | Type | Certainty (informal, with reason) | Population match | Link |
-|---|---|---|---|---|---|
-| Home hypertension ≥135/85 | Parati, Stergiou et al., J Hypertens 2021 | Position paper | Moderate: expert consensus, agrees with ESC 2024 | Adults | [PMC9904446](https://pmc.ncbi.nlm.nih.gov/articles/PMC9904446) |
-| ESC home elevated 120/70 to <135/85; home hypertension ≥135/85 | McEvoy et al., Eur Heart J 2024, as tabulated in Rev Esp Cardiol 2025 | Guideline via expert commentary | Moderate: guideline full text not opened | Adults | [doi](https://doi.org/10.1093/eurheartj/ehae178), [table](https://www.revespcardiol.org/en-comments-on-2024-esc-guidelines-articulo-S1885585725000477) |
-| AHA/ACC office categories unchanged from 2017 | ACC press release 2025 | Guideline summary | Moderate: summary by the issuing body; not reopened by the reviewer | US adults | [acc.org](https://www.acc.org/About-ACC/Press-Releases/2025/08/13/20/03/New-high-blood-pressure-guideline-emphasizes-prevention-early-treatment-to-reduce-cvd-risk) |
-| Protocol: 7 days, duplicates, 5 min rest | Parati, Stergiou et al. 2021 | Position paper | Moderate: expert consensus | Adults | [PMC9904446](https://pmc.ncbi.nlm.nih.gov/articles/PMC9904446) |
-| Day 1 about 2.8/1.4 higher | J Hypertens 2022;40:1380–1387, PMID 35762478 | Observational | Low to moderate: one pooled cross sectional analysis | Adults in Finland, Greece, UK | [doi](https://doi.org/10.1097/HJH.0000000000003157) |
-| Severe reading >180/120 | American Heart Association | Patient guidance | Used as a safety limit only | Adults, not pregnant | [heart.org](https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/hypertensive-crisis-when-you-should-call-911-for-high-blood-pressure) |
+| Claim | Source | Type | How it was read | Link |
+|---|---|---|---|---|
+| Home hypertension ≥135/85; protocol | Parati, Stergiou et al., J Hypertens 2021 | Position paper | Full text | [PMC9904446](https://pmc.ncbi.nlm.nih.gov/articles/PMC9904446) |
+| ACC/AHA home stage 1 threshold 130/80, same as office | Same paper, describing the 2017 ACC/AHA guideline | Position paper | Full text | [PMC9904446](https://pmc.ncbi.nlm.nih.gov/articles/PMC9904446) |
+| AHA/ACC 2025 keeps the 2017 criteria | ACC press release, 2025 | Summary by the issuing body | Full page | [acc.org](https://www.acc.org/About-ACC/Press-Releases/2025/08/13/20/03/New-high-blood-pressure-guideline-emphasizes-prevention-early-treatment-to-reduce-cvd-risk) |
+| ESC 2024 home thresholds | McEvoy et al., Eur Heart J 2024, table as reproduced in Rev Esp Cardiol 2025 | Guideline via commentary | Commentary table | [table](https://www.revespcardiol.org/en-comments-on-2024-esc-guidelines-articulo-S1885585725000477) |
+| Day 1 higher; discard it, especially in short schedules | Kyriakoulis et al., J Hypertens 2022 | Observational, 2,122 people | Abstract | [doi](https://doi.org/10.1097/HJH.0000000000003157) |
+| Validation allows mean device error up to 5 mmHg | ISO 81060-2 criterion 1, as stated in a validation study | Validation study | Table | [PMC7154042](https://pmc.ncbi.nlm.nih.gov/articles/PMC7154042/table/T0002) |
+| Single reading >180/120 is severe | American Heart Association | Patient guidance | Full page | [heart.org](https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/hypertensive-crisis-when-you-should-call-911-for-high-blood-pressure) |
 
-**Source criticism.** The ESC home thresholds come from a reproduction of the guideline's
-table by a national society's working group, not the guideline full text; they agree
-with the ESH 2021 paper's home threshold, which lowers the risk of a transcription error.
-The AHA/ACC home equivalents are a gap, stated rather than filled in.
+The ESC home values come from a commentary, not the guideline text; they agree with the
+ESH 2021 home threshold.
 
 ## 9. Integrity
+- **Preregistration:** not provable. The example was written and run in one session
+  before the repository had a commit, so no commit predates the data.
+- **Changes after the first result** (see `git log` for `plan.md` and `conclusion.md`):
+  the questions about duplicates and symptoms, triggers T4 to T7, the inconclusive and
+  supported outcomes, and the highest diastolic reading were added after a first review;
+  the AHA/ACC comparison, the per guideline decisions and the complete day rule were
+  added after an external review showed that the AHA/ACC home threshold is 130/80. The
+  ESC decision, the primary endpoint and every earlier number are unchanged.
 - **Hypothesis:** "I think the app is right. My blood pressure is in the hypertension range."
-  Tested as: the protocol week mean is at or above 135/85.
-- **Null hypothesis:** the mean is below 135/85, with the upper end of its interval also
-  below.
+- **Decision and outcome:** ESC 2024 rejected; AHA/ACC inconclusive.
 - **Primary endpoint:** protocol week mean, days 2 to 7.
-- **Secondary endpoints:** listed in `plan.md` § 0.
-- **Exploratory or confirmatory:** confirmatory for the primary endpoint.
-- **Number of metrics held against a reference:** 2 (systolic and diastolic mean). With
-  two, chance alone is a minor concern.
-- **What would falsify the conclusion:** a new protocol week, with a validated cuff,
-  averaging at or above 135/85.
-- **Did the result differ from the hypothesis?** Yes. The owner expected hypertension;
-  the primary endpoint is below the home threshold with its whole interval. After the
-  result, during review round 1, the plan gained a dated revision (`plan.md`, Revision 1):
-  two owner questions, triggers T4 to T7, two more decision outcomes, one secondary
-  endpoint and stricter validation. The deciding rule and every earlier number are
-  unchanged.
+- **Kind of analysis:** retrospective with a plan; the owner had seen the readings.
+- **Comparisons held against a reference:** 89 (81 readings against the alarm limit,
+  plus systolic and diastolic against two guidelines for the primary and the
+  sensitivity analysis). The two primary decisions decide the answer.
+- **What would falsify it:** a new protocol week, with a validated cuff, whose interval
+  lies at or above a threshold.
 
 ## 10. Alternatives and replication
-- **Other ways:** keep day 1 (done as sensitivity: 126.0/78.3); average all readings
-  instead of day means (smaller interval, overstated certainty); use ambulatory 24 hour
-  monitoring (better, but needs a clinician).
-- **Free choices that could change the number:** day 1, the averaging unit, and whether
-  untagged ad hoc readings are trusted. None moves the mean near 135/85.
-- **Replication:** a second protocol week in about three months, with a cuff confirmed
-  as clinically validated.
+- **Other ways:** all readings instead of day means (narrower interval, overstated
+  certainty); separate morning and evening means; 24 hour ambulatory monitoring (better,
+  but needs a clinician).
+- **Free choices:** day 1, the averaging unit, the complete day rule, which guideline.
+  Only the guideline changes a decision.
+- **Replication:** a second protocol week with a cuff confirmed as clinically validated.
