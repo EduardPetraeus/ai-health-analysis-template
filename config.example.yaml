@@ -1,0 +1,12 @@
+# Copy this file to config.yaml and fill it in. config.yaml is never committed.
+
+# Folder where your health data lives, outside this repository.
+data_path: ~/health-data
+
+# Terms that must never appear in a commit: your name, ID numbers, sample IDs,
+# email addresses, street names. tools/check.py blocks commits containing them.
+# Matching is case insensitive. One term per line.
+private_terms:
+  - Your Full Name
+  - your.email@example.com
+

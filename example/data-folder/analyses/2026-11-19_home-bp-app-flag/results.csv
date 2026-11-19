@@ -1,0 +1,29 @@
+metric,value
+raw_rows,84
+duplicates_removed,2
+excluded_cuff_loose,1
+analysed_rows,81
+app_label_matches_office_rule,81/81
+protocol_days_used_primary,6
+protocol_readings_used_primary,24
+primary_mean_sys,125.5
+primary_sys_ci95_low,122.6
+primary_sys_ci95_high,128.5
+primary_mean_dia,78.4
+primary_dia_ci95_low,76.1
+primary_dia_ci95_high,80.7
+sensitivity_all7_mean_sys,126.0
+sensitivity_all7_mean_dia,78.3
+adhoc_readings,53
+adhoc_labelled_stage1_or_2,40/53
+adhoc_no_note_mean_sys,128.7
+adhoc_no_note_mean_dia,77.5
+adhoc_no_note_n,26
+adhoc_with_note_mean_sys,134.1
+adhoc_with_note_mean_dia,81.6
+adhoc_with_note_n,27
+highest_single_reading,145/70 on 2026-09-10
+highest_diastolic_reading,133/89 on 2026-10-02
+primary_below_home_hypertension_135_85,True
+primary_in_esc_home_elevated_range,True
+any_reading_over_crisis_180_120,False

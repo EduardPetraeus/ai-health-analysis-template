@@ -1,0 +1,38 @@
+# Personal configuration
+config.yaml
+
+# Data never lives in this repository (DATA.md). Synthetic example data is allowed.
+*.csv
+*.tsv
+*.parquet
+*.xlsx
+*.xls
+*.numbers
+*.db
+*.duckdb
+*.sqlite
+*.pdf
+*.vcf
+*.vcf.gz
+*.bam
+*.fastq
+*.fastq.gz
+*.zip
+*.gz
+*.dcm
+*.png
+*.jpg
+*.jpeg
+*.heic
+!example/**/*.csv
+
+# Exports often arrive as JSON or XML
+exports/
+*.export.json
+export.xml
+
+# Python and OS
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
