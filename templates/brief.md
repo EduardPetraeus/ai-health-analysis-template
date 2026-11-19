@@ -6,7 +6,8 @@ written in your own words before anyone opens the data values, and before the AI
 suggests anything.** "I don't know" is a valid answer everywhere. Delete the italic
 guidance when filling in. Words you do not know: `GLOSSARY.md`.*
 
-**Date:** YYYY-MM-DD · **Level:** 1 / 2 / 3 (`ROLES.md § 2`) · **Remote control:** no
+**Date:** YYYY-MM-DD · **Level:** 1 / 2 / 3 (`ROLES.md § 2`; 1 until you have closed an
+analysis) · **Remote control:** no
 (only with level 3, `modules/autopilot/`)
 
 ## 1. Goal
@@ -29,9 +30,12 @@ else: who, and how did they consent?*
 | Are you under 18? | |
 | Known diagnoses relevant to this question | |
 | Medication you take | |
+| Have you already seen a single value that your app, device or lab marked as very high, alarming or urgent? Which? | |
 
 *New or worrying symptoms, or a pregnancy: the analysis stops here, and the AI advises
-contacting a clinician, or emergency services if it feels urgent.*
+contacting a clinician, or emergency services if it feels urgent. An alarming value you
+have seen: the AI finds the published alarm limit and its source now, before the next
+field. If the value crosses it, the analysis ends there (`METHOD.md § 5`).*
 
 ## 5. Data
 *Which sources (by name in `semantics/sources/`) and roughly which period, as far as I
@@ -57,6 +61,9 @@ decide.*
 ## 9. What would change my mind
 *Which result would make me believe the opposite?*
 *Example: "If my average, measured properly, is clearly below the threshold."*
+
+*As soon as fields 8 and 9 are written, the AI commits this file. That commit proves
+they came before the data (`METHOD.md § 3`).*
 
 ## 10. Country and guideline
 *Where do you live, and which guideline does your clinician follow, if you know? "Don't

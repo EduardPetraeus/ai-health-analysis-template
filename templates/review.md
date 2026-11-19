@@ -18,12 +18,14 @@ only; earlier rounds live in git history.*
 | 2 | Every field used is documented in `semantics/` | | | |
 | 3 | Every number meets METHOD § 2 | | | |
 | 4 | Thresholds match their cited sources, opened and read. Without web access: could not be checked | | | |
-| 5 | Preregistration commit exists and precedes the data; changes after it are listed | | | |
+| 5 | Brief commit precedes any read of data values; plan commit precedes any judged calculation; changes after them are listed | | | |
 | 6 | Negative statements have positive controls | | | |
 | 7 | A planted error is caught by the analysis checks | | | |
 | 8 | No data files and no living file dependencies | | | |
 | 9 | `conclusion.md` within one page, section 5 filled in, no advice or urgency without a source | | | |
 | 10 | The statistics hold: assumptions stated, an alternative analysis or threshold source tried, the conclusion follows from the numbers | | | |
+| 11 | Every number and every counted claim in `conclusion.md` ("all 9 days", "most readings") matches a command output, quoted here | | | |
+| 12 | If T1 fired: nothing was computed after it, and the conclusion quotes the source's instruction | | | |
 
 ## Findings, ranked by consequence
 1. **Wrong meaning or wrong number:**
@@ -31,4 +33,9 @@ only; earlier rounds live in git history.*
 3. **Form:**
 
 ## Verdict
-✅ green / ❌ fixes needed (list, each with the expected result after the fix)
+✅ green (no finding of rank 1 or 2) / ❌ fixes needed (list, each with the expected result
+after the fix)
+
+## Next step for the owner
+*One message: which chat gets which findings, with the fix prompt from `README.md` § 5,
+and that a new review chat follows. The reviewer commits this file.*

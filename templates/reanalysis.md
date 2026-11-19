@@ -46,8 +46,11 @@ same data, same answer.*
 exists for a claim, write that.*
 
 ## 9. Integrity
-- **Preregistration:** commit `<hash>` contains the approved brief and plan, made before
-  data values were opened. *(Or: why that was not possible.)*
+- **Preregistration:** commit `<hash>` contains the brief with fields 8 and 9, made before
+  any data value was read. Commit `<hash>` contains the approved plan, made before any
+  judged calculation. *(Or: why that was not possible.)*
+- **Escalation triggers:** T1 to T7, each fired, not fired with the evidence, or could not
+  be checked with the reason.
 - **Changes after preregistration:** one line per commit that changed the plan or the
   answer, with what changed. *(Or: none.)*
 - **Hypothesis:** *(verbatim from the approved plan)*

@@ -98,6 +98,11 @@ ESH 2021 home threshold.
 ## 9. Integrity
 - **Preregistration:** not provable. The example was written and run in one session
   before the repository had a commit, so no commit predates the data.
+- **Escalation triggers:** T1 not fired (highest 145/70 and 133/89, none above 180/120).
+  T2 could not be checked (needs a risk estimate). T3 could not be checked (one week). T4
+  not fired (one marker). T5 not fired (no clinician ordered test needed). T6 not fired
+  (no new symptoms, owner). **T7 fired:** the guidelines disagree, and the meaning
+  depends on risk this analysis cannot estimate. No source used here makes it urgent.
 - **Changes after the first result.** The repository's first commit, `b68dc6e`,
   already holds the plan, the data and a result, so the original approved plan is not in
   git. What changed after the first result:
@@ -116,6 +121,10 @@ ESH 2021 home threshold.
   - The commit "Final review round 2 fixes": the alarm check runs on all 84 raw readings
     before any exclusion; the readings unit alternative became result rows; the count
     went from 91 to 95.
+  - The commit "Hard T1 stop, two step preregistration, review checks the conclusion",
+    after the green review of `5fc0b38`: the trigger list moved here from conclusion § 7,
+    and conclusion § 2 opens with an everyday sentence, to follow the updated conclusion
+    template. No number changed.
 
   The (fictional) owner approved each changed plan with "ok" on 2026-11-19. The ESC
   decision, the primary endpoint and every number in it are unchanged throughout.

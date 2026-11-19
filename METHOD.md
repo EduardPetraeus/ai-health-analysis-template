@@ -53,10 +53,12 @@ This is a single reading of one lab value, not a count."
 [`templates/brief.md`](templates/brief.md).
 
 **Safety comes first.** The brief asks about new symptoms, pregnancy, age under 18,
-known diagnoses and medication before anything else. New or worrying symptoms, or a
-pregnancy, stop the analysis: the AI advises contacting a clinician, or emergency
-services if it feels urgent. The other answers decide whether published thresholds apply
-to the owner at all.
+known diagnoses, medication, and any single value the owner has already seen marked as
+very high or alarming, before anything else. New or worrying symptoms, or a pregnancy,
+stop the analysis: the AI advises contacting a clinician, or emergency services if it
+feels urgent. An alarming value the owner has seen is checked against the T1 alarm limit
+at once (§ 9), before the brief continues. The other answers decide whether published
+thresholds apply to the owner at all.
 
 The brief is the owner's half of the method. The AI may interview the owner through it,
 with one rule that protects the whole analysis:
@@ -82,9 +84,11 @@ Why first and not last: a hypothesis written after the results is a rationalizat
 to the main finding afterwards is outcome switching. Both are prevented only by writing
 things down before measuring, and by being able to prove when it was written:
 
-> **Preregistration is a commit.** The brief and the approved plan are committed before
-> any data value is opened, and `reanalysis.md` § 9 records that commit. Without git, a
-> SHA256 hash of both files is written to the plan's last line and repeated in § 9.
+> **Preregistration is two commits.** The brief is committed as soon as fields 8 and 9
+> are written, before any data value is opened. The approved plan is committed after the
+> owner's ok, before anything the decision rule judges is computed. `reanalysis.md` § 9
+> records both commits. Without git, a SHA256 hash of each file is written to its last
+> line and repeated in § 9.
 
 ## 4. Source agreement
 
@@ -92,7 +96,7 @@ An AI may never choose the data on its own and start computing. The order is:
 
 1. **Find the sources** and list them: path, fields, date range, row count.
 2. **Show the list to the owner** with what each will be used for.
-3. **Ask about known gaps,** one question at a time, recommended answer first. The owner
+3. **Ask about known gaps,** one question per message, recommended answer first. The owner
    knows things about their data that are written nowhere: a device that was replaced, a
    habit that was removed from an app, a week of illness.
 4. **Only then compute.**
@@ -104,14 +108,26 @@ When sources disagree, the trust order in [DATA.md § 3](DATA.md#3-trust-order) 
 Phase 0 is the brief (§ 3); phases 1 to 5 follow, in order. The owner's "ok" to the plan
 approves phases 0 to 3 together, after the owner has answered the plan's questions.
 
-**Before the ok, data may be described but not judged.** Row counts, date range, column
-names, distinct codes, duplicates and gaps are allowed. Anything the decision rule will
-judge (a mean, a rate, a comparison with a threshold) is not. Before fields 8 and 9 of
-the brief exist, only column headers may be read (`head -1 <file>`).
+**When data may be read.** Three steps, in this order:
 
-**One exception, for safety:** as soon as values are opened, every single value is
-checked against the alarm limits found for trigger T1 (§ 9). A hit stops everything and
-goes to the owner at once.
+1. **Until the brief is committed** (§ 3): only column headers (`head -1 <file>`).
+2. **After the brief commit, before the ok:** the data may be described but not judged.
+   First find the T1 alarm limits with their source (§ 9), or write that none exist.
+   Then tell the owner what will be read and why, in one line, and read it. Row counts,
+   date range, distinct codes, duplicates and gaps are allowed. Anything the decision
+   rule will judge (a mean, a rate, a comparison with a threshold) is not.
+3. **After the ok and the plan commit:** phases 4 and 5.
+
+**Reading any value column counts as opening values,** distinct codes and app labels
+included. From that moment every single value is checked against the T1 alarm limits.
+
+**A T1 hit ends computation in this analysis.** The AI shows the values, quotes what the
+limit's source says to do, and stops. It does not offer to continue, and it computes no
+average or other summary, even if the owner asks; the owner cannot approve continuing
+past T1 ([ROLES.md § 3](ROLES.md#3-what-only-the-owner-approves)). A new analysis may
+start once the step the source names has happened, for example measuring again or
+seeing a clinician, and its brief records that step. If the owner reports symptoms, T6
+applies as well.
 
 | Phase | Content | Output |
 |---|---|---|
@@ -209,9 +225,9 @@ versions side by side, no revision tables. Git holds the history: the commit mes
 says what changed and why, and `git log` shows the rest. Two versions of the same text in
 one repository confuse every reader, human or AI.
 
-What git cannot show by itself is written as facts in `reanalysis.md` § 9: the commit
-that preregistered the plan, and the commits that changed the plan or the answer after
-that. One line each.
+What git cannot show by itself is written as facts in `reanalysis.md` § 9: the two
+commits that preregistered the brief and the plan, and the commits that changed the plan
+or the answer after that. One line each.
 
 ### `reanalysis.md` is written while working, not afterwards
 
@@ -221,10 +237,15 @@ session reading **only** this file reaches the same numbers.
 ### `conclusion.md` is one page
 
 At most about 400 words, tables not counted. Tables are tall and narrow (at most three
-columns) so they read on a phone. **Section 5, "What this does NOT answer", is never left
-out.** The conclusion describes what the comparison shows and lists questions to take to
-a clinician. It gives no advice, deadlines or urgency that are not quoted from a cited
-source.
+columns) so they read on a phone. **It starts with an answer the owner could repeat to a
+clinician in one everyday sentence.** Method words (trigger numbers, interval names)
+belong in `reanalysis.md`; the conclusion names a fired trigger in plain words.
+**Section 5, "What this does NOT answer", is never left out.** The conclusion describes
+what the comparison shows and lists questions to take to a clinician. It gives no
+advice, deadlines or urgency that are not quoted from a cited source.
+
+**The conclusion is written before the review,** so the review checks it like every other
+file: each number and each counted claim in it against a command output.
 
 ### Analyses do not depend on living files
 
@@ -255,7 +276,7 @@ that cannot be checked is written as "could not be checked" with the reason, nev
 
 | # | Trigger | What to do |
 |---|---|---|
-| T1 | A value crosses a **published alarm limit** | Exactly what the limit's source says to do, quoted. Checked on every value as soon as data are opened (§ 5) |
+| T1 | A value crosses a **published alarm limit** | Computation ends (§ 5). Exactly what the limit's source says to do, quoted. No offer to continue; the owner cannot approve continuing. Checked on every value as soon as any value is read |
 | T2 | A guideline names the finding as an **indication for referral** or further workup | Take it to a clinician, with the guideline named |
 | T3 | The same marker moves the wrong way over **at least three independent measurements**, by more than its documented variation | Take it to a clinician. Without a sourced figure for the variation: could not be checked |
 | T4 | A **combination** of markers that a guideline names as a pattern needing assessment | Take it to a clinician, with the guideline named |
@@ -272,7 +293,8 @@ Rules:
    cited source gives one.
 3. **No trigger fired does not mean the value is unimportant.** Every conclusion says so:
    this method cannot rule out disease.
-4. The list may not be edited in a session that has seen a result that would trigger it.
+4. The list, and the plan's handling of a trigger, may not be edited in a session that
+   has seen a result that would trigger it.
 
 ## 10. Flags
 
@@ -314,7 +336,8 @@ escape hatch degrades into the escape hatch.
 
 - [ ] Brief filled in, safety questions answered, hypothesis and field 9 in the owner's
       words before data values were opened
-- [ ] Brief and plan committed before data values were opened; commit in `reanalysis.md` § 9
+- [ ] Brief committed before data values were opened, plan committed after the ok and
+      before any judged calculation; both commits in `reanalysis.md` § 9
 - [ ] Plan approved by the owner before any calculation
 - [ ] Every field used is documented in `semantics/`, or marked undocumented and not used
       for conclusions
@@ -324,10 +347,12 @@ escape hatch degrades into the escape hatch.
 - [ ] `reanalysis.md` has all ten sections; § 8 has a link per external claim and says
       whether each source was opened; § 9 counts every comparison
 - [ ] No dependency on a living file (§ 8)
-- [ ] Escalation triggers T1 to T7 checked and written out (§ 9)
+- [ ] Escalation triggers T1 to T7 checked and written out in `reanalysis.md` (§ 9); after
+      a T1 hit, nothing was computed
 - [ ] Every flag in both `conclusion.md` § 6 and `status/follow-up.md` (§ 10)
 - [ ] Negative statements have a positive control or stand as gaps (§ 7)
-- [ ] Review done by a separate session that reran the analysis, at every level
+- [ ] Review done by a separate session that reran the analysis and checked every number
+      in `conclusion.md`, at every level, and the last review is green and committed
       ([ROLES.md § 4](ROLES.md#4-review))
 - [ ] `conclusion.md` within one page, section 5 filled in, no advice or urgency without a
       cited source
@@ -357,6 +382,6 @@ compliant with any of these standards.
 | **TOP Guidelines** | A policy framework for transparency: registration, analysis plan, data and code transparency, reproducibility | [Center for Open Science](https://www.cos.io/initiatives/top-guidelines) |
 | **GRADE** | Rating certainty of a whole body of evidence per outcome. Used here only as inspiration; a single source is described by type and by how directly it was read | [GRADE](https://www.cochrane.org/learn/courses-and-resources/cochrane-methodology/grade) |
 
-The committed brief and plan act as a preregistration. `reanalysis.md` § 7 is
+The two commits of brief and plan act as a preregistration. `reanalysis.md` § 7 is
 reproduction (same data, same answer); § 10 is replication (new data, does it still
 hold?).

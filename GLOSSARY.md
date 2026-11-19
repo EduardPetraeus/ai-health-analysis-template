@@ -12,7 +12,7 @@ Plain explanations of words used in this folder.
 | **Confirmatory** | Tests a hypothesis on data nobody had looked at yet |
 | **Retrospective** | Tests a hypothesis on data you have already seen. Allowed, but said out loud |
 | **Exploratory** | Looks for patterns without a hypothesis. Suggests ideas, decides nothing |
-| **Preregistration** | Saving the brief and plan (a git commit) before opening the data, so anyone can see they were not changed to fit the result |
+| **Preregistration** | Saving the brief (a git commit) before opening the data, and the plan before computing anything, so anyone can see they were not changed to fit the result |
 | **HARKing** | "Hypothesizing after the results are known": deciding what you expected after seeing the answer |
 | **Denominator** | The "out of how many" in a number: the 35 in 27 of 35 days |
 | **Reference interval** | The range where 95 % of healthy people fall. Being outside it is not the same as being ill |

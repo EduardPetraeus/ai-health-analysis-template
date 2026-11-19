@@ -49,7 +49,8 @@ have made differently.*
 **Expected results, preregistered:** *(row counts, which outputs will exist)*
 
 **Escalation triggers:** *(T1 to T7, each with its sourced limit and what the source says
-to do, or "no source found"; which cannot be checked and why)*
+to do, or "no source found"; which cannot be checked and why. A T1 hit ends computation;
+the plan never offers to continue past it, `METHOD.md § 5`)*
 
 **Comparisons held against a reference:** *(count all of them, and name the ones that
 decide the answer)*
@@ -66,9 +67,13 @@ decide the answer)*
 
 - **What we are trying to find out:**
 - **Your hypothesis, and how we test it:**
+- **How we decide:** *the guideline's simple comparison (the average against the
+  threshold) and this plan's stricter rule, if it has one, with what each says when the
+  result lands close to the threshold*
 - **Data we will use, and their weak spots:**
 - **What this can NOT answer:**
 - **What comes back to you:**
 
-🛑 **Stop here until the owner says ok. Then commit `brief.md` and `plan.md` before any
-data value is opened (`METHOD.md § 3`).**
+🛑 **Stop here until the owner says ok. Then commit `plan.md` before anything the decision
+rule judges is computed. `brief.md` was committed when fields 8 and 9 were written
+(`METHOD.md § 3`).**

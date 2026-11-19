@@ -6,7 +6,7 @@
 |---|---|---|
 | **Owner** (the person whose data it is) | Sets the direction in the brief, confirms which data to use, approves the plan, approves every change to `status/`, reads the conclusion | Needs to follow the details |
 | **Planner** (an AI session) | Turns the brief into a plan for phases 0 to 3, documents semantics, gives the owner one clear overview to approve | Reviews its own plan |
-| **Executor** (an AI session) | Runs phases 4 and 5 exactly as planned, writes `reanalysis.md` while working | Deviates from the plan without writing old wording, new wording and reason |
+| **Executor** (an AI session) | Runs phases 4 and 5 exactly as planned: writes `analysis.py`, writes `reanalysis.md` while working, and writes `conclusion.md` before the review. Fixes what the review finds | Deviates from the plan without writing old wording, new wording and reason |
 | **Reviewer** (a separate AI session) | Reruns the analysis and checks every claim against files ([§ 4](#4-review)) | Accepts a number it has not reproduced |
 
 Under level 1 one session plays planner and executor. **The review is always a separate
@@ -17,13 +17,15 @@ session, at every level:** the owner opens a new chat and pastes the review prom
 
 | Level | Setup | When |
 |---|---|---|
-| **1. Single chat** (default) | One session plans and executes; the owner approves the plan and reads the conclusion | Getting started, small questions |
-| **2. Separate roles** (recommended) | Planner, executor and reviewer in separate sessions; the reviewer ideally on a different model | Anything the owner will act on |
+| **1. Single chat** (default) | One session plans and executes; a second chat reviews; the owner approves the plan and reads the conclusion | The owner's first analyses, and most questions |
+| **2. Separate roles** | Planner and executor in separate sessions, handed over with [`templates/handover.md`](templates/handover.md); the reviewer ideally on a different model | Once the owner knows the flow, for a result they will act on |
 | **3. Autopilot** (opt in) | A coordinating session drives the others and contacts the owner only when needed | Only when the owner switches it on: [`modules/autopilot/`](modules/autopilot/README.md) |
 
 Nothing moves up a level unless the owner says so. The level is written in each brief.
-When interviewing the owner for a brief, the AI recommends a level and, for level 2 and
-3, which model runs which role, with a one line reason.
+When interviewing the owner for a brief, the AI recommends a level with a one line
+reason: **level 1 until the owner has closed at least one analysis**, because level 2
+means moving messages between sessions. For level 2 and 3 it also says which model runs
+which role.
 
 ## 3. What only the owner approves
 
@@ -36,8 +38,12 @@ These never run on autopilot, at any level:
 4. **Every change to `status/`.** The AI may draft; the owner confirms each change.
 5. **Anything involving another person's data:** who, for what, and how consent was
    given. Consent passed on verbally by the owner is logged as exactly that.
-6. **A deviation from the approved method.**
+6. **A deviation from the approved method.** Never continuing past a T1 hit: nobody
+   can approve that, the owner included
+   ([METHOD.md § 5](METHOD.md#5-the-five-phases)).
 7. **Any escalation trigger** ([METHOD.md § 9](METHOD.md#9-escalation-triggers-written-before-the-result)).
+   The AI reports a fired trigger and what its source says; it never offers to set it
+   aside.
 
 Everything else (semantics, knowledge, results catalog, READMEs, the analysis files) is
 written and verified by the AI, which records who checked a file and when: in the
@@ -58,11 +64,18 @@ The review is what catches the errors nobody else sees. No analysis closes witho
    expectation before reading them.
 4. **Planted errors.** Where a check exists, the reviewer plants one deliberate error and
    confirms the check catches it.
-5. Findings go in `review.md` ([template](templates/review.md)), ranked by consequence:
-   wrong meaning or wrong number first, then reproducibility, then form.
+5. **The conclusion is checked like any file.** Every number and every counted claim in
+   `conclusion.md` is matched to a command output.
+6. Findings go in `review.md` ([template](templates/review.md)), ranked by consequence:
+   wrong meaning or wrong number first, then reproducibility, then form. **The reviewer
+   commits `review.md`** and tells the owner, in one message, what to paste where next.
 
-Rounds of fixes continue until the review is green. Each fix states its expected result
-before it is run.
+**The fix loop.** Findings of rank 1 and 2 block closing; form findings are fixed or
+listed as open. The session that executed the analysis fixes them (at level 1, the
+analysis chat), stating each fix's expected result before running it; the owner pastes
+the fix prompt from [README.md](README.md#5-have-it-reviewed). Then a **new** review
+session reviews again. After three rounds without green, stop and ask the owner how to
+go on.
 
 ## 5. Ownership is by folder
 

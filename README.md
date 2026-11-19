@@ -80,6 +80,9 @@ Read START_HERE.md and set this up for me.
 Remember that whatever the AI reads is sent to the company that runs it
 ([DISCLAIMER.md](DISCLAIMER.md#your-data-and-your-privacy)).
 
+Using Claude Code? [`tools/claude-code-permissions.md`](tools/claude-code-permissions.md)
+has an optional list of read only commands to allow, so you get fewer permission prompts.
+
 The AI will interview you, one question at a time:
 
 1. where your data folder is (saved in `config.yaml`, which is never committed);
@@ -108,6 +111,16 @@ ROLES.md section 4, using templates/review.md. Rerun everything; trust nothing y
 have not reproduced.
 ```
 
+If the review is not green, go back to the chat that ran the analysis and paste:
+
+```text
+Read analyses/<folder name>/review.md and fix every finding of rank 1 and 2. Tell me the
+expected result of each fix before you run it.
+```
+
+Then open a new chat and review again. After three rounds without green, the reviewer
+stops and asks you how to go on.
+
 **Want to see an example first?** Paste this instead:
 
 ```text
@@ -134,7 +147,7 @@ Every analysis runs in the same six steps. You do three of them.
 | Level | What | Default? |
 |---|---|---|
 | **1. Single chat** | One AI conversation plans and runs; a second chat reviews; you approve the plan and read the conclusion | ✅ Yes |
-| **2. Separate roles** | Planning, execution and review in separate conversations, ideally on different models | Recommended for anything you will act on |
+| **2. Separate roles** | Planning and execution in separate conversations, ideally on different models | Once you know the flow, for results you will act on |
 | **3. Autopilot** | One AI coordinates the others and only contacts you when needed | Opt in: [`modules/autopilot/`](modules/autopilot/) |
 
 Nothing runs on its own unless you switch it on.

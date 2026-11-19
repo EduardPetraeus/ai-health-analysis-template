@@ -3,16 +3,18 @@
 **Analysis:** YYYY-MM-DD · **Full trail:** [`reanalysis.md`](reanalysis.md) ·
 [`review.md`](review.md)
 
-*One page, about 400 words, tables not counted. Tables at most three columns. Plain
-language. No advice, deadlines or urgency unless quoted from a cited source
+*Written before the review, so the review checks every number in it. One page, about
+400 words, tables not counted. Tables at most three columns. Plain language; method
+words belong in `reanalysis.md`. No advice, deadlines or urgency unless quoted from a cited source
 (`METHOD.md § 8`). Not medical advice (`DISCLAIMER.md`).*
 
 ## 1. What we asked
 *One sentence.*
 
 ## 2. The answer
-*One or two sentences, plain language, naming the guideline the answer depends on.
-"Unresolved" is a valid answer.*
+*First sentence: an answer the owner could repeat to a clinician, in everyday words.
+Then one sentence naming the guideline it depends on; if guidelines differ, the answer
+under each. "Unresolved" is a valid answer.*
 
 ## 3. What the comparison shows
 *Two to four points: what the numbers show, with denominators and dates.*
@@ -34,8 +36,8 @@ unimportant; this method cannot rule out disease."*
 | Status | NEW / MONITOR / ESCALATED / ... |
 
 ## 7. Questions to take to a clinician
-*Concrete questions the owner can ask. Then the escalation triggers T1 to T7: fired, not
-fired with the evidence, or could not be checked with the reason.*
+*Concrete questions the owner can ask. If a trigger fired, say so in plain words and what
+its source says to do. The full trigger list is in `reanalysis.md` § 9.*
 
 ## 8. How sure are we
 *In words. What the uncertainty covers and what it does not. What would overturn the

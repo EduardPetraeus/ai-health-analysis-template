@@ -13,6 +13,7 @@ Blocking checks (exit 1):
   2. Size: nothing over 1 MB.
   3. Private terms: none of the terms in config.yaml under private_terms, in file
      contents or file names, also across line breaks.
+     Nor in the git author (user.name, user.email), which every commit records.
   4. Index: every folder has a README.md that names each file and subfolder in it.
   5. Links: every relative Markdown link points to an existing file and heading.
   6. One truth: no struck through text (~~) and no "Revision" headings in Markdown files
@@ -166,6 +167,20 @@ def check_private_terms(files, staged):
                 line = text.count("\n", 0, match.start()) + 1
                 problems.append(f"private term #{number} in {rel}:{line}")
     return problems, None
+
+
+def check_commit_author():
+    """The commit author is part of every commit, so it must not hold a private term."""
+    terms = config.private_terms()
+    problems = []
+    for key in ("user.name", "user.email"):
+        value = (git("config", key) or "").strip()
+        for i, term in enumerate(terms):
+            if value and term_pattern(term).search(value):
+                problems.append(
+                    f"git {key} contains private term #{i + 1}; every commit records it. "
+                    f'Set a private author for this folder: git config {key} "<alias>"')
+    return problems
 
 
 def readme_tokens(text):
@@ -358,6 +373,7 @@ def main(argv):
     blocking = check_allowed_and_size(files)
     term_problems, term_note = check_private_terms(files, staged)
     blocking += term_problems
+    blocking += check_commit_author()
     blocking += check_index(all_files)
     blocking += check_links(all_files)
     blocking += check_one_truth(all_files)

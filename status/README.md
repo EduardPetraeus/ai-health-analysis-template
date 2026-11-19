@@ -9,6 +9,10 @@ before it is saved ([ROLES.md § 3](../ROLES.md#3-what-only-the-owner-approves))
 | `follow-up.md` | Open flags from analyses, with status and review dates |
 | `protocol.md` | What the owner currently does on purpose: routines, supplements, experiments |
 
+**"None" is a fact; blank is unknown.** If the owner says they take no supplements or have
+no diagnoses, write a row that says "none", with the date. Leave a table empty only when
+nothing is known.
+
 ## Confirmation: how old may a fact be?
 
 Every file has two lines at the top:

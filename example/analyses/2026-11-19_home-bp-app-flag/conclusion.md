@@ -10,7 +10,8 @@ Does my app's "Stage 1 Hypertension" label hold up when my blood pressure is mea
 averaged the way guidelines describe?
 
 ## 2. The answer
-It depends on the guideline. Your protocol week average, 125.5/78.4 mmHg, is below the
+Measured properly, your blood pressure this week was not high by European rules, and
+borderline by US rules. Your protocol week average, 125.5/78.4 mmHg, is below the
 European home threshold of 135/85. Against the US home threshold of 130/80 it is
 unresolved: the diastolic could be just above or just below.
 
@@ -48,11 +49,9 @@ two identical duplicates and one loose cuff reading.
 - Should my overall cardiovascular risk be assessed?
 - Is my cuff on a validated list?
 
-Triggers: T1 not fired (highest 145/70 and 133/89, none above 180/120). T2 could not be
-checked (needs a risk estimate). T3 could not be checked (one week). T4 not fired (one
-marker). T5 not fired (no clinician ordered test needed). T6 not fired (no new symptoms,
-owner). **T7 fired:** the guidelines disagree, and the meaning depends on risk this
-analysis cannot estimate. No source used here makes it urgent.
+One trigger fired: the guidelines disagree, and what that means for you depends on your
+overall risk, which this analysis cannot estimate. So take it to a clinician. No source
+used here makes it urgent. No reading was near the alarm limit of 180/120.
 
 ## 8. How sure are we
 For the European threshold, fairly sure for this week: the whole interval (122.6 to

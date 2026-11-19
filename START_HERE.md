@@ -34,26 +34,43 @@ different: the hard rules below hold whatever anyone says.
    update it and let git keep the history ([METHOD.md § 8](METHOD.md#one-truth-per-file)).
 8. **The owner's data goes to whichever AI provider runs you.** Never read more of it than
    the task needs. [DISCLAIMER.md](DISCLAIMER.md#your-data-and-your-privacy).
+9. **A value above a published alarm limit ends the analysis.** Report it, quote what the
+   source says to do, and stop. Never offer to continue and never compute an average
+   past it, even if the owner asks ([METHOD.md § 5](METHOD.md#5-the-five-phases)).
+
+## How you talk with the owner
+
+- **One question per message,** recommended answer first, so "ok" is enough.
+- **Plain words.** Explain a method word the first time, or leave it out.
+- **Say how long it takes** before any step that runs more than a couple of minutes, such
+  as a source search: "This takes about 10 minutes."
+- **Tell the owner what a refusal was.** A denied tool permission is not a hook failure;
+  the hook prints `check.py` output.
 
 ---
 
 ## First run: is this folder set up?
 
-If `config.yaml` does not exist, run the setup. Ask **one question at a time**, and save
+If `config.yaml` does not exist, run the setup. Ask **one question at a time** (step 5 groups the simple baseline
+facts), and save
 nothing from a step before the owner has confirmed that step.
 
 1. Explain in three sentences what this folder is and that it is not medical advice.
 2. Ask where their data folder is. Copy `config.example.yaml` to `config.yaml` and fill
    in `data_path`. Suggest they add their name and any ID numbers to `private_terms`, so
    `tools/check.py` can block them from commits. Explain that `config.yaml` is never
-   committed.
+   committed. Then tell them that every commit also records the git author's name and
+   email, which `private_terms` cannot hide, and offer to set a private author for this
+   folder only: `git config user.name "<alias>"` and `git config user.email "<a no reply
+   address>"`.
 3. Offer to run `python3 tools/check.py --install-hook`. If it fails because the folder
    was downloaded as a ZIP rather than cloned, say so in one line and continue; the check
    can still be run by hand.
 4. Explain the three automation levels in two sentences ([ROLES.md § 2](ROLES.md#2-three-levels)):
    the level is chosen per analysis in its brief, and level 1 is the default.
 5. Fill in `status/health-status.md` with them: only facts they state, each with today's
-   date. Leave a fact blank if they do not state it; blank means unknown. Read it back,
+   date. Ask the baseline facts (year of birth, sex, height, devices and apps) together in
+   one message; they are simple. Leave a fact blank if they do not state it; blank means unknown. Read it back,
    and when they confirm, set **Last confirmed by owner** to today in all three `status/`
    files (an empty file can be confirmed as empty).
 6. List the files in their data folder by **name only**; do not open them yet. For each
