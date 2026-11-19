@@ -16,6 +16,7 @@ primary_dia_ci95_low,76.1
 primary_dia_ci95_high,80.7
 decision_esc_2024_home_135_85,rejected
 decision_aha_acc_home_130_80,inconclusive
+primary_mean_in_esc_home_elevated_band,True
 margin_to_esc_sys_upper,6.5
 margin_to_esc_dia_upper,4.3
 margin_to_aha_sys_upper,1.5
@@ -35,4 +36,4 @@ adhoc_with_note_mean_dia,81.6
 adhoc_with_note_n,27
 highest_single_reading,145/70 on 2026-09-10
 highest_diastolic_reading,133/89 on 2026-10-02
-comparisons_against_a_reference,89
+comparisons_against_a_reference,91

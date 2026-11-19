@@ -142,6 +142,10 @@ def run():
 
     # Safety first (METHOD section 5): every single value against the alarm limit.
     alarm_hits = [r for r in rows if int(r["SYS (mmHg)"]) > ALARM[0] or int(r["DIA (mmHg)"]) > ALARM[1]]
+    if alarm_hits:
+        listed = ", ".join(f"{r['SYS (mmHg)']}/{r['DIA (mmHg)']} on {r['Date']} {r['Time']}" for r in alarm_hits)
+        raise SystemExit(f"STOP: reading above {ALARM[0]}/{ALARM[1]} ({listed}). Tell the owner now "
+                         "(trigger T1); nothing else is computed or written.")
 
     label_matches = sum(app_rule(int(r["SYS (mmHg)"]), int(r["DIA (mmHg)"])) == r["Category"] for r in rows)
 
@@ -149,6 +153,7 @@ def run():
     sensitivity = protocol_summary(rows, skip_first_day=False)
 
     esc = FRAMEWORKS["esc_2024"]["hypertension"]
+    esc_elevated = FRAMEWORKS["esc_2024"]["elevated"]
     aha = FRAMEWORKS["aha_acc"]["stage1"]
 
     adhoc = [r for r in rows if r["Note"] != "protocol"]
@@ -161,7 +166,8 @@ def run():
     def m(rs, col):
         return statistics.mean(int(r[col]) for r in rs)
 
-    comparisons = len(rows) + 2 * 2 * 2  # every reading vs alarm; 2 frameworks x sys/dia x primary/sensitivity
+    # every reading vs alarm; 2 frameworks x sys/dia x primary/sensitivity; ESC elevated band sys/dia
+    comparisons = len(rows) + 2 * 2 * 2 + 2
 
     return [
         ("raw_rows", len(raw)),
@@ -181,6 +187,9 @@ def run():
         ("primary_dia_ci95_high", round(primary["dia"][2], 1)),
         ("decision_esc_2024_home_135_85", decide(primary, esc)),
         ("decision_aha_acc_home_130_80", decide(primary, aha)),
+        ("primary_mean_in_esc_home_elevated_band",
+         (primary["sys"][0] >= esc_elevated[0] or primary["dia"][0] >= esc_elevated[1])
+         and primary["sys"][0] < esc[0] and primary["dia"][0] < esc[1]),
         ("margin_to_esc_sys_upper", round(esc[0] - primary["sys"][2], 1)),
         ("margin_to_esc_dia_upper", round(esc[1] - primary["dia"][2], 1)),
         ("margin_to_aha_sys_upper", round(aha[0] - primary["sys"][2], 1)),

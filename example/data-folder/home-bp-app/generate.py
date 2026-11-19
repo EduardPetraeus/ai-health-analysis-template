@@ -13,8 +13,8 @@ The file imitates a typical consumer app export:
     the reading;
   * 2026-11-08 to 2026-11-14: a protocol week, two readings morning and evening
     after 5 minutes of seated rest, noted "protocol". Day 1 runs a little higher;
-  * the app labels EACH reading with a category using office blood pressure cut
-    points;
+  * the app labels EACH reading with a category, using the AHA/ACC cut points on
+    one reading at a time;
   * two rows are duplicated by an app sync, and one reading is noted "cuff loose".
 """
 
@@ -43,7 +43,7 @@ DAY1_EFFECT = (3.0, 1.5)
 
 
 def app_category(sys_, dia):
-    """How the fictional app labels a single reading (office cut points)."""
+    """How the fictional app labels a single reading (AHA/ACC cut points, per reading)."""
     if sys_ >= 140 or dia >= 90:
         return "Stage 2 Hypertension"
     if sys_ >= 130 or dia >= 80:

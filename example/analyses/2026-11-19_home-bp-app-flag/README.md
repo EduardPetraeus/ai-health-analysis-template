@@ -12,4 +12,5 @@
 | `analysis.py` | The script; `--check` reruns and compares | |
 
 Data output: `example/data-folder/analyses/2026-11-19_home-bp-app-flag/results.csv`.
-Earlier versions of these files, and earlier review rounds, are in git history.
+Earlier versions of these files, and earlier review rounds, are in git history;
+`reanalysis.md` § 9 lists what changed and in which commit.

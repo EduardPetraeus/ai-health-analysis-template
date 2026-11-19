@@ -53,6 +53,7 @@ either threshold (§ 5).
 | 95 % interval, diastolic | 76.1 to 80.7 |
 | **Decision, ESC 2024 (135/85)** | **Rejected**: both upper ends below |
 | **Decision, AHA/ACC (130/80)** | **Inconclusive**: diastolic interval spans 80 |
+| Primary mean in the ESC home elevated band (120/70 to <135/85) | Yes |
 | Margin from upper end to ESC threshold | 6.5 systolic, 4.3 diastolic |
 | Margin from upper end to AHA/ACC threshold | 1.5 systolic, −0.7 diastolic |
 | Sensitivity, all 7 days | 126.0/78.3; same two decisions |
@@ -96,19 +97,29 @@ ESH 2021 home threshold.
 ## 9. Integrity
 - **Preregistration:** not provable. The example was written and run in one session
   before the repository had a commit, so no commit predates the data.
-- **Changes after the first result** (see `git log` for `plan.md` and `conclusion.md`):
-  the questions about duplicates and symptoms, triggers T4 to T7, the inconclusive and
-  supported outcomes, and the highest diastolic reading were added after a first review;
-  the AHA/ACC comparison, the per guideline decisions and the complete day rule were
-  added after an external review showed that the AHA/ACC home threshold is 130/80. The
-  ESC decision, the primary endpoint and every earlier number are unchanged.
+- **Changes after the first result.** The repository's first commit, `b68dc6e`,
+  already holds the plan, the data and a result, so the original approved plan is not in
+  git. Changes since:
+  - In `b68dc6e` (after a first review): owner questions about duplicates and symptoms,
+    triggers T4 to T7, the supported and inconclusive outcomes, the highest diastolic
+    reading.
+  - In `d1bc466` (after an external review showed the AHA/ACC home threshold is 130/80):
+    the AHA/ACC comparison and per guideline decisions; *confirmatory* changed to
+    *retrospective*; the complete day rule; the margin and device error step; the
+    comparison count changed from 2 to every comparison made; three result rows that
+    rested on the earlier single threshold removed.
+  - In the commit after `d1bc466` (after the final review): the alarm check now stops the
+    script, the ESC elevated band is a result row, and this list.
+
+  The (fictional) owner approved each changed plan with "ok" on 2026-11-19. The ESC
+  decision, the primary endpoint and every number in it are unchanged throughout.
 - **Hypothesis:** "I think the app is right. My blood pressure is in the hypertension range."
 - **Decision and outcome:** ESC 2024 rejected; AHA/ACC inconclusive.
 - **Primary endpoint:** protocol week mean, days 2 to 7.
 - **Kind of analysis:** retrospective with a plan; the owner had seen the readings.
-- **Comparisons held against a reference:** 89 (81 readings against the alarm limit,
-  plus systolic and diastolic against two guidelines for the primary and the
-  sensitivity analysis). The two primary decisions decide the answer.
+- **Comparisons held against a reference:** 91 (81 readings against the alarm limit;
+  systolic and diastolic against two guidelines for the primary and the sensitivity
+  analysis; the primary mean against the ESC elevated band). The two primary decisions decide the answer.
 - **What would falsify it:** a new protocol week, with a validated cuff, whose interval
   lies at or above a threshold.
 
@@ -117,5 +128,8 @@ ESH 2021 home threshold.
   certainty); separate morning and evening means; 24 hour ambulatory monitoring (better,
   but needs a clinician).
 - **Free choices:** day 1, the averaging unit, the complete day rule, which guideline.
-  Only the guideline changes a decision.
+  Two of them change the AHA/ACC decision: the guideline itself, and the averaging unit.
+  With all 24 readings as the unit instead of days, the diastolic interval is 77.1 to
+  79.6 and AHA/ACC becomes *rejected*. That interval overstates certainty, because two
+  readings a minute apart are not independent, which is why the plan uses days.
 - **Replication:** a second protocol week with a cuff confirmed as clinically validated.

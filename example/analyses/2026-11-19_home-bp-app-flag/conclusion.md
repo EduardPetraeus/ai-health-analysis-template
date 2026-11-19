@@ -30,8 +30,8 @@ two identical duplicates and one loose cuff reading.
 ## 5. What this does NOT answer
 - Whether you need treatment, or your overall heart and stroke risk.
 - Whether one week represents you.
-- Whether your cuff is accurate: a validated cuff may read up to 5 mmHg off, more than
-  the diastolic margin.
+- Whether your cuff is accurate: a validated cuff may read up to 5 mmHg off on average,
+  more than the diastolic margin.
 - No trigger fired does not mean the value is unimportant; this method cannot rule out
   disease.
 
@@ -58,4 +58,4 @@ analysis cannot estimate. No source used here makes it urgent.
 For the European threshold, fairly sure for this week: the whole interval (122.6 to
 128.5 / 76.1 to 80.7) is below 135/85, and keeping day 1 gives 126.0/78.3. For the US
 threshold we cannot tell. The interval covers this week only, not device error. A new
-protocol week with a validated cuff would settle it.
+protocol week with a validated cuff would narrow it.

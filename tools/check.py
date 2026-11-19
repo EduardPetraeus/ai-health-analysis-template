@@ -15,9 +15,11 @@ Blocking checks (exit 1):
      contents or file names, also across line breaks.
   4. Index: every folder has a README.md that names each file and subfolder in it.
   5. Links: every relative Markdown link points to an existing file and heading.
+  6. One truth: no struck through text (~~) and no "Revision" headings in Markdown files
+     (METHOD.md section 8).
 
 Warnings (exit 0):
-  6. Status files whose owner confirmation is missing, invalid or expired, and baseline
+  7. Status files whose owner confirmation is missing, invalid or expired, and baseline
      facts in status/health-status.md stated more than 365 days ago.
 
 Standard library only. It reports; it never changes a file.
@@ -244,6 +246,26 @@ def check_links(files):
     return problems
 
 
+def check_one_truth(files):
+    problems = []
+    for rel in files:
+        if not rel.endswith(".md") or not (ROOT / rel).exists():
+            continue
+        in_code = False
+        for n, line in enumerate((ROOT / rel).read_text(encoding="utf-8", errors="ignore").splitlines(), 1):
+            if fence_toggle(line):
+                in_code = not in_code
+                continue
+            if in_code:
+                continue
+            bare = re.sub(r"`[^`]*`", "", line)
+            if "~~" in bare:
+                problems.append(f"struck through text in {rel}:{n}; keep one truth, git holds history")
+            if re.match(r"^#{1,6}\s+revision\b", bare.strip(), re.IGNORECASE):
+                problems.append(f"revision section in {rel}:{n}; keep one truth, git holds history")
+    return problems
+
+
 def check_status_freshness():
     warnings = []
     for path in sorted((ROOT / "status").glob("*.md")):
@@ -338,6 +360,7 @@ def main(argv):
     blocking += term_problems
     blocking += check_index(all_files)
     blocking += check_links(all_files)
+    blocking += check_one_truth(all_files)
     warnings = check_status_freshness()
     if term_note:
         warnings.append(term_note)

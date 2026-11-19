@@ -83,8 +83,8 @@ readings over 6 complete days in the primary.
   meaning depends on overall risk.
 
 **Comparisons held against a reference:** every analysed reading against the alarm
-limit, plus systolic and diastolic against two guidelines for the primary and the
-sensitivity analysis. The two primary decisions decide the answer.
+limit; systolic and diastolic against two guidelines for the primary and the sensitivity
+analysis; the primary mean against the ESC elevated band. The two primary decisions decide the answer.
 
 ## 4. Execution and review
 
