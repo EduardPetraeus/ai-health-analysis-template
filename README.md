@@ -118,18 +118,16 @@ Read example/README.md and walk me through the example analysis.
 
 ## How it works
 
-```text
- You                          Your AI
- ───                          ───────
- 1. Brief: question,    ──▶   2. Plan: hypothesis, sources, method
-    expectation, what              (stops and waits)
-    would change your mind
- 3. "ok"                ──▶   4. Runs the analysis, writes every step down
-                              5. Separate review reruns it
- 6. Read the conclusion ◀──   (one page, with what it does NOT answer)
-```
+Every analysis runs in the same six steps. You do three of them.
 
-You decide the direction, confirm the data, and approve the plan. The AI does the rest.
+| Step | Who | What happens |
+|---|---|---|
+| 1 | You | Answer the brief: your question, what you expect, and what result would change your mind |
+| 2 | AI | Writes a plan: hypothesis, sources and method. Then it **stops and waits** |
+| 3 | You | Read the plan and say "ok" |
+| 4 | AI | Runs the analysis and writes every step down |
+| 5 | A second AI chat | Reruns everything without trusting the first |
+| 6 | You | Read the one page conclusion, including what it does **not** answer |
 
 ### Three levels of automation
 
